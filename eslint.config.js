@@ -35,8 +35,15 @@ export default tseslint.config(
         "error",
         { prefer: "type-imports" },
       ],
+      "@typescript-eslint/restrict-template-expressions": [
+        "error",
+        { allowNumber: true },
+      ],
       "@typescript-eslint/no-floating-promises": "error",
-      "@typescript-eslint/no-misused-promises": "error",
+      "@typescript-eslint/no-misused-promises": [
+        "error",
+        { checksVoidReturn: { attributes: false } },
+      ],
       "no-console": ["warn", { allow: ["warn", "error"] }],
     },
   },

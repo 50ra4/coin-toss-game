@@ -8,8 +8,12 @@ type Props = {
 };
 
 export function PredictionButton({ onPredict, disabled }: Props) {
-  const handleHeads = useCallback(() => onPredict('heads'), [onPredict]);
-  const handleTails = useCallback(() => onPredict('tails'), [onPredict]);
+  const handleHeads = useCallback(() => {
+    onPredict('heads');
+  }, [onPredict]);
+  const handleTails = useCallback(() => {
+    onPredict('tails');
+  }, [onPredict]);
 
   return (
     <div className="flex justify-center gap-6">

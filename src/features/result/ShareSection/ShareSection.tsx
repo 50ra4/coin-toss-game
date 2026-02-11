@@ -6,10 +6,11 @@ import {
   shareToX,
   shareToThreads,
   shareViaWebShareAPI,
+  isWebShareSupported,
 } from '@/services/share.service';
 import { liffService } from '@/services/liff.service';
 
-const IS_WEB_SHARE_SUPPORTED = !!navigator.share;
+const IS_WEB_SHARE_SUPPORTED = isWebShareSupported();
 
 type Props = {
   mode: GameMode;

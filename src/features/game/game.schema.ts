@@ -1,10 +1,11 @@
 import { z } from 'zod';
+import type { GameMode, CoinSide } from '@/consts/game';
 import { COIN_SIDES, GAME_MODES } from '@/consts/game';
 
-const gameModeValues = Object.values(GAME_MODES) as [string, ...string[]];
+const gameModeValues = Object.values(GAME_MODES) as [GameMode, ...GameMode[]];
 export const GameModeSchema = z.enum(gameModeValues);
 
-const coinSideValues = Object.values(COIN_SIDES) as [string, ...string[]];
+const coinSideValues = Object.values(COIN_SIDES) as [CoinSide, ...CoinSide[]];
 export const CoinSideSchema = z.enum(coinSideValues);
 
 export const GameStateSchema = z.object({

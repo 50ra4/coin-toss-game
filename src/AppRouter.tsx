@@ -1,18 +1,18 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { HomePage } from '@/pages/HomePage';
+import { GamePage } from '@/pages/GamePage';
+import { ResultPage } from '@/pages/ResultPage';
 
-const basename = import.meta.env.BASE_URL;
-
-function Placeholder({ name }: { name: string }) {
-  return <div>{name}</div>;
-}
+const BASENAME = import.meta.env.BASE_URL;
 
 export function AppRouter() {
   return (
-    <BrowserRouter basename={basename}>
+    <BrowserRouter basename={BASENAME}>
       <Routes>
-        <Route path="/" element={<Placeholder name="Home" />} />
-        <Route path="/game/:mode" element={<Placeholder name="Game" />} />
-        <Route path="/result" element={<Placeholder name="Result" />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/game/:mode" element={<GamePage />} />
+        <Route path="/result" element={<ResultPage />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   );

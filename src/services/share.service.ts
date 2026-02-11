@@ -66,8 +66,12 @@ export const shareToThreads = (text: string): void => {
   );
 };
 
+// navigator.share is undefined in some browsers despite TS type definitions
+export const isWebShareSupported = (): boolean =>
+  !!(navigator.share as unknown);
+
 export const shareViaWebShareAPI = async (text: string): Promise<void> => {
-  if (!navigator.share) {
+  if (!isWebShareSupported()) {
     throw new Error('Web Share API not supported');
   }
 
