@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-casino-black text-white antialiased;
+  }
+}
+
+@layer components {
+  .coin-btn {
+    @apply rounded-lg bg-gradient-to-r from-casino-gold to-casino-lightGold px-6 py-3 font-bold text-casino-black shadow-md transition-all duration-300 hover:shadow-lg;
+  }
+
+  .coin-btn-secondary {
+    @apply rounded-lg border border-casino-gold px-6 py-3 font-bold text-casino-gold transition-all duration-300 hover:bg-casino-gold hover:text-casino-black;
+  }
+}
+
+@layer utilities {
+  .coin-glow-gold {
+    box-shadow:
+      0 0 20px rgba(212, 175, 55, 0.3),
+      0 0 40px rgba(212, 175, 55, 0.2);
+  }
+}
