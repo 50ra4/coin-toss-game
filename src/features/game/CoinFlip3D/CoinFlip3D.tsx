@@ -11,7 +11,8 @@ const FLIP_TRANSITION = {
   ease: 'easeInOut' as const,
 };
 
-const IDLE_STYLE = 'flex h-28 w-28 items-center justify-center rounded-full text-5xl';
+const IDLE_STYLE =
+  'flex h-28 w-28 items-center justify-center rounded-full text-5xl';
 
 type Props = {
   result: CoinSide | null;

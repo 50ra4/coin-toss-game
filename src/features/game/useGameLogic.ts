@@ -31,9 +31,7 @@ const TEN_ROUNDS_MAX = 10;
 const FLIP_DURATION_MS = 2000;
 
 export const useGameLogic = (mode: GameMode) => {
-  const [state, setState] = useState<GameState>(() =>
-    createInitialState(mode)
-  );
+  const [state, setState] = useState<GameState>(() => createInitialState(mode));
 
   const predict = useCallback(
     (side: CoinSide) => {
@@ -54,9 +52,7 @@ export const useGameLogic = (mode: GameMode) => {
 
           const correct = prev.coinResult === prev.prediction;
           const newScore = correct ? prev.score + 1 : prev.score;
-          const newConsecutive = correct
-            ? prev.consecutiveCorrect + 1
-            : 0;
+          const newConsecutive = correct ? prev.consecutiveCorrect + 1 : 0;
 
           const isGameOver =
             prev.mode === GAME_MODES.survival
@@ -73,7 +69,7 @@ export const useGameLogic = (mode: GameMode) => {
         });
       }, FLIP_DURATION_MS);
     },
-    [state.phase]
+    [state.phase],
   );
 
   const nextRound = useCallback(() => {

@@ -8,7 +8,7 @@ import '@/styles/globals.css';
 const initialData = loadStorageData();
 document.documentElement.classList.toggle(
   'dark',
-  initialData.preferences.darkMode
+  initialData.preferences.darkMode,
 );
 
 const rootElement = document.getElementById('root');
@@ -19,5 +19,5 @@ if (!rootElement) {
 createRoot(rootElement).render(
   <StrictMode>
     <App />
-  </StrictMode>
+  </StrictMode>,
 );

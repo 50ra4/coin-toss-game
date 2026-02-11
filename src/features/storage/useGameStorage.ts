@@ -17,7 +17,7 @@ export const useGameStorage = () => {
       setData(result.data);
       return { isNewRecord: result.isNewRecord, rank: result.rank };
     },
-    [data]
+    [data],
   );
 
   const updatePreferences = useCallback(
@@ -29,7 +29,7 @@ export const useGameStorage = () => {
       saveStorageData(newData);
       setData(newData);
     },
-    [data]
+    [data],
   );
 
   return { data, saveScore, updatePreferences };

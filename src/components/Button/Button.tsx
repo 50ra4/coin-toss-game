@@ -13,8 +13,7 @@ export function Button({
   className,
   disabled = false,
 }: Props) {
-  const baseClass =
-    variant === 'primary' ? 'coin-btn' : 'coin-btn-secondary';
+  const baseClass = variant === 'primary' ? 'coin-btn' : 'coin-btn-secondary';
 
   return (
     <button

@@ -82,11 +82,7 @@ export function ResultPage() {
           />
 
           <div className="flex flex-col gap-3">
-            <Button
-              onClick={handleRetry}
-              variant="primary"
-              className="w-full"
-            >
+            <Button onClick={handleRetry} variant="primary" className="w-full">
               🔄 同じモードで再挑戦
             </Button>
             <Button

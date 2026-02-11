@@ -39,7 +39,7 @@ export class AudioService {
     oscillator.frequency.setValueAtTime(440, ctx.currentTime);
     oscillator.frequency.exponentialRampToValueAtTime(
       880,
-      ctx.currentTime + 0.2
+      ctx.currentTime + 0.2,
     );
 
     gainNode.gain.setValueAtTime(0.3, ctx.currentTime);
@@ -60,7 +60,7 @@ export class AudioService {
     oscillator.frequency.setValueAtTime(440, ctx.currentTime);
     oscillator.frequency.exponentialRampToValueAtTime(
       220,
-      ctx.currentTime + 0.2
+      ctx.currentTime + 0.2,
     );
 
     gainNode.gain.setValueAtTime(0.3, ctx.currentTime);
@@ -82,11 +82,11 @@ export class AudioService {
       oscillator.frequency.setValueAtTime(440, ctx.currentTime);
       oscillator.frequency.exponentialRampToValueAtTime(
         660,
-        ctx.currentTime + 0.3
+        ctx.currentTime + 0.3,
       );
       oscillator.frequency.exponentialRampToValueAtTime(
         880,
-        ctx.currentTime + 0.6
+        ctx.currentTime + 0.6,
       );
       gainNode.gain.setValueAtTime(0.4, ctx.currentTime);
       gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.8);
@@ -96,7 +96,7 @@ export class AudioService {
       oscillator.frequency.setValueAtTime(440, ctx.currentTime);
       oscillator.frequency.exponentialRampToValueAtTime(
         660,
-        ctx.currentTime + 0.4
+        ctx.currentTime + 0.4,
       );
       gainNode.gain.setValueAtTime(0.3, ctx.currentTime);
       gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.5);

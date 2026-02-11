@@ -18,7 +18,7 @@ export const useSound = () => {
         | 'incorrect'
         | 'newRecord1'
         | 'newRecord2'
-        | 'newRecord3'
+        | 'newRecord3',
     ) => {
       if (!soundEnabled) return;
 
@@ -43,7 +43,7 @@ export const useSound = () => {
           break;
       }
     },
-    [soundEnabled]
+    [soundEnabled],
   );
 
   return { soundEnabled, toggleSound, playSound };

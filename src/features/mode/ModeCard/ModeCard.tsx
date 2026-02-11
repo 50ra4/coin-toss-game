@@ -14,9 +14,7 @@ export function ModeCard({ title, description, bestScore, onSelect }: Props) {
       <h2 className="text-xl font-bold text-casino-gold">{title}</h2>
       <p className="text-gray-400">{description}</p>
       {!!bestScore && (
-        <p className="text-sm text-gray-500">
-          {`ベスト: ${bestScore}`}
-        </p>
+        <p className="text-sm text-gray-500">{`ベスト: ${bestScore}`}</p>
       )}
       <Button onClick={onSelect} variant="primary" className="mt-auto">
         PLAY ▶

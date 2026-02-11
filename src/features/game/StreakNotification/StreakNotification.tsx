@@ -19,9 +19,7 @@ type Props = {
 };
 
 export function StreakNotification({ consecutiveCorrect }: Props) {
-  const threshold = STREAK_THRESHOLDS.findLast(
-    (t) => consecutiveCorrect >= t
-  );
+  const threshold = STREAK_THRESHOLDS.findLast((t) => consecutiveCorrect >= t);
 
   const message = threshold
     ? STREAK_MESSAGES[threshold as keyof typeof STREAK_MESSAGES]

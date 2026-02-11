@@ -53,7 +53,7 @@ export const shareToX = (text: string): void => {
   window.open(
     `https://twitter.com/intent/tweet?text=${encodedText}`,
     '_blank',
-    'noopener,noreferrer,width=600,height=400'
+    'noopener,noreferrer,width=600,height=400',
   );
 };
 
@@ -62,7 +62,7 @@ export const shareToThreads = (text: string): void => {
   window.open(
     `https://threads.net/intent/post?text=${encodedText}`,
     '_blank',
-    'noopener,noreferrer,width=600,height=400'
+    'noopener,noreferrer,width=600,height=400',
   );
 };
 

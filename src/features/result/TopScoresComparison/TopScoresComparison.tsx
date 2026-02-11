@@ -26,9 +26,7 @@ export function TopScoresComparison({ scores, unit, newRank }: Props) {
               <li
                 key={`${item.score}-${index}`}
                 className={`flex items-center justify-between rounded-lg px-3 py-2 ${
-                  isNew
-                    ? 'bg-casino-gold/10 text-casino-gold'
-                    : 'text-gray-400'
+                  isNew ? 'bg-casino-gold/10 text-casino-gold' : 'text-gray-400'
                 }`}
               >
                 <span>{`${RANK_ICONS.at(index) ?? ''} ${rank}位`}</span>

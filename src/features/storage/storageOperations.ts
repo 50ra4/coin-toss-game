@@ -44,7 +44,7 @@ export const getBestScore = (data: StorageData, mode: GameMode): number =>
 export const updateTopScores = (
   data: StorageData,
   mode: GameMode,
-  newScore: number
+  newScore: number,
 ): { data: StorageData; isNewRecord: boolean; rank: number | null } => {
   const currentScores = [...data.topScores[mode]];
 

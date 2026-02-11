@@ -33,7 +33,9 @@ export function NewRecordAnimation({ rank }: Props) {
       className="relative py-8 text-center"
       initial={CONTAINER_INITIAL}
       animate={containerAnimate}
-      transition={isFirstPlace ? CONTAINER_TRANSITION_FIRST : CONTAINER_TRANSITION_OTHER}
+      transition={
+        isFirstPlace ? CONTAINER_TRANSITION_FIRST : CONTAINER_TRANSITION_OTHER
+      }
     >
       {isFirstPlace && <ConfettiEffect />}
       <motion.div

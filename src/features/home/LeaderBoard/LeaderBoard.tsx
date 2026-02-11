@@ -17,8 +17,16 @@ export function LeaderBoard({ topScores }: Props) {
         🏆 Your Best Records
       </h2>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-        <ScoreList title="10回モード" scores={topScores.tenRounds} unit="回正解" />
-        <ScoreList title="サバイバル" scores={topScores.survival} unit="連続正解" />
+        <ScoreList
+          title="10回モード"
+          scores={topScores.tenRounds}
+          unit="回正解"
+        />
+        <ScoreList
+          title="サバイバル"
+          scores={topScores.survival}
+          unit="連続正解"
+        />
       </div>
     </div>
   );
@@ -39,7 +47,10 @@ function ScoreList({ title, scores, unit }: ScoreListProps) {
       ) : (
         <ul className="space-y-1">
           {scores.map((item, index) => (
-            <li key={`${item.score}-${index}`} className="text-sm text-gray-400">
+            <li
+              key={`${item.score}-${index}`}
+              className="text-sm text-gray-400"
+            >
               {`${RANK_ICONS.at(index) ?? ''} ${item.score}${unit}`}
             </li>
           ))}
