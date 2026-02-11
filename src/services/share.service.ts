@@ -10,7 +10,7 @@ type ShareTextParams = {
 };
 
 const getScoreText = (mode: GameMode, score: number): string =>
-  `${String(score)}${SCORE_UNITS[mode]}`;
+  `${score}${SCORE_UNITS[mode]}`;
 
 export const generateShareText = (params: ShareTextParams): string => {
   const { mode, score, bestScore, isNewRecord, rank } = params;

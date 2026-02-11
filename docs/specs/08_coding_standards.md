@@ -514,6 +514,34 @@ export const Button = ({ label, onClick }: Props) => {
 };
 ```
 
+#### props への参照渡しによる再レンダリング防止
+
+オブジェクトや関数をインラインで props に渡すと、毎レンダリングで新しい参照が生成され再レンダリングの原因になる。
+
+```typescript
+// ✅ 良い例: オブジェクトをモジュールレベルで大文字スネークケースの定数に
+const ANIMATE_CONFIG = { rotateY: 1800, scale: [1, 1.2, 1] };
+const TRANSITION_CONFIG = { duration: 2, ease: "easeInOut" as const };
+
+export function CoinAnimation() {
+  return <motion.div animate={ANIMATE_CONFIG} transition={TRANSITION_CONFIG} />;
+}
+
+// ✅ 良い例: 状態に依存しない関数もモジュールレベルの大文字スネークケースで定義
+const STOP_PROPAGATION = (e: React.MouseEvent) => {
+  e.stopPropagation();
+};
+
+// ✅ 良い例: props を持たないコンポーネントは React.memo で囲む
+export const ConfettiEffect = memo(function ConfettiEffect() {
+  return <div>{/* ... */}</div>;
+});
+
+// ❌ 悪い例: インラインオブジェクト・関数を props に渡す
+<motion.div animate={{ rotateY: 1800 }} />
+<div onClick={(e) => e.stopPropagation()} />
+```
+
 #### Feature Component（`features/`）
 
 ```typescript
