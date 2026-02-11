@@ -31,6 +31,12 @@ pnpm check             # 全チェック一括実行(format + lint + type + test
 
 ## アーキテクチャ
 
+### 定数とスキーマ
+
+- **`consts/`** — アプリ全体の定数（`as const` オブジェクトマップ + `typeof` 派生型）
+- Zodスキーマは `consts/` の定数から派生させる。型取得は `z.output` を使用（`z.infer` ではなく）
+- 定数オブジェクトのexportは `as const satisfies Type` で不変性と型チェックを両立
+
 ### コンポーネント設計（3層分離）
 
 - **`components/`** — Pure Components: propsのみ受け取る純粋なUI部品。hooks禁止
@@ -62,7 +68,7 @@ pnpm check             # 全チェック一括実行(format + lint + type + test
 
 ### TypeScript
 
-- `any` 禁止、`enum` 禁止（Literal Union を使う）
+- `any` 禁止、`enum` 禁止（`as const` オブジェクトマップを使う）
 - 型推論を活かす（自明な型注釈は書かない）
 - 型のインポートは `import type` を使用
 - 未使用変数は `_` プレフィックス

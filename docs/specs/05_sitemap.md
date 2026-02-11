@@ -838,9 +838,10 @@ import type { Route } from "./+types/game";
 import { GamePage } from "../pages/GamePage";
 import { redirect } from "react-router";
 import { GameModeSchema } from "../features/game/game.schema";
+import { MODE_NAMES } from "../consts/game";
 
 export function meta({ params }: Route.MetaArgs) {
-  const modeName = params.mode === "tenRounds" ? "10回モード" : "サバイバルモード";
+  const modeName = MODE_NAMES[params.mode as keyof typeof MODE_NAMES] ?? "不明";
   return [
     { title: `${modeName} | コイントス予想ゲーム` },
   ];

@@ -43,51 +43,32 @@
 
 ```typescript
 import { z } from "zod";
-import { GameModeSchema } from "../game/game.schema";
 
-/**
- * トップスコア項目
- * スコアのみを保存（シンプル化）
- */
 export const TopScoreItemSchema = z.object({
   score: z.number().int().min(0),
 });
-export type TopScoreItem = z.infer<typeof TopScoreItemSchema>;
+export type TopScoreItem = z.output<typeof TopScoreItemSchema>;
 
-/**
- * ユーザー設定
- */
 export const PreferencesSchema = z.object({
   darkMode: z.boolean().default(false),
   soundEnabled: z.boolean().default(true),
 });
-export type Preferences = z.infer<typeof PreferencesSchema>;
+export type Preferences = z.output<typeof PreferencesSchema>;
 
-/**
- * LocalStorage 全体データ
- */
 export const StorageDataSchema = z.object({
   topScores: z.object({
-    "10-rounds": z.array(TopScoreItemSchema).max(3).default([]),
+    tenRounds: z.array(TopScoreItemSchema).max(3).default([]),
     survival: z.array(TopScoreItemSchema).max(3).default([]),
   }),
   preferences: PreferencesSchema,
 });
-export type StorageData = z.infer<typeof StorageDataSchema>;
+export type StorageData = z.output<typeof StorageDataSchema>;
 
-/**
- * デフォルト値
- */
-export const defaultStorageData: StorageData = {
-  topScores: {
-    "10-rounds": [],
-    survival: [],
-  },
-  preferences: {
-    darkMode: false,
-    soundEnabled: true,
-  },
-};
+// as const satisfies で型チェック + 不変性を両立
+export const defaultStorageData = {
+  topScores: { tenRounds: [], survival: [] },
+  preferences: { darkMode: false, soundEnabled: true },
+} as const satisfies StorageData;
 ```
 
 ---

@@ -179,18 +179,51 @@ coin-toss-game/
 
 ## 状態管理設計
 
+### 定数定義（`consts/game.ts`）
+
+アプリ全体で共有する定数は `src/consts/` 配下に配置する。`as const` で不変にし、型は `typeof` から派生させる。
+
+```typescript
+export const GAME_MODES = {
+  tenRounds: "tenRounds",
+  survival: "survival",
+} as const;
+
+export type GameMode = (typeof GAME_MODES)[keyof typeof GAME_MODES];
+
+export const COIN_SIDES = {
+  heads: "heads",
+  tails: "tails",
+} as const;
+
+export type CoinSide = (typeof COIN_SIDES)[keyof typeof COIN_SIDES];
+
+export const MODE_NAMES = {
+  tenRounds: "10回モード",
+  survival: "サバイバルモード",
+} as const;
+
+export const SCORE_UNITS = {
+  tenRounds: "回正解",
+  survival: "連続正解",
+} as const;
+```
+
 ### Zod スキーマ定義
+
+Zod スキーマは `src/consts/` の定数から派生させる。型の取得には `z.infer` ではなく `z.output` を使用する。
 
 #### ゲーム状態（`features/game/game.schema.ts`）
 
 ```typescript
 import { z } from "zod";
+import { COIN_SIDES, GAME_MODES } from "../../consts/game";
 
-export const GameModeSchema = z.enum(["10-rounds", "survival"]);
-export type GameMode = z.infer<typeof GameModeSchema>;
+const gameModeValues = Object.values(GAME_MODES) as [string, ...string[]];
+export const GameModeSchema = z.enum(gameModeValues);
 
-export const CoinSideSchema = z.enum(["heads", "tails"]);
-export type CoinSide = z.infer<typeof CoinSideSchema>;
+const coinSideValues = Object.values(COIN_SIDES) as [string, ...string[]];
+export const CoinSideSchema = z.enum(coinSideValues);
 
 export const GameStateSchema = z.object({
   mode: GameModeSchema,
@@ -199,45 +232,41 @@ export const GameStateSchema = z.object({
   isPlaying: z.boolean(),
   coinResult: CoinSideSchema.nullable(),
   prediction: CoinSideSchema.nullable(),
+  consecutiveCorrect: z.number().int().min(0),
 });
-export type GameState = z.infer<typeof GameStateSchema>;
+export type GameState = z.output<typeof GameStateSchema>;
 ```
 
 #### ローカルストレージ（`features/storage/storage.schema.ts`）
 
 ```typescript
 import { z } from "zod";
-import { GameModeSchema } from "../game/game.schema";
 
-export const HistoryItemSchema = z.object({
-  mode: GameModeSchema,
+export const TopScoreItemSchema = z.object({
   score: z.number().int().min(0),
-  timestamp: z.number().int().positive(),
 });
-export type HistoryItem = z.infer<typeof HistoryItemSchema>;
+export type TopScoreItem = z.output<typeof TopScoreItemSchema>;
+
+export const PreferencesSchema = z.object({
+  darkMode: z.boolean().default(false),
+  soundEnabled: z.boolean().default(true),
+});
+export type Preferences = z.output<typeof PreferencesSchema>;
 
 export const StorageDataSchema = z.object({
-  bestScores: z.object({
-    "10-rounds": z.number().int().min(0).default(0),
-    survival: z.number().int().min(0).default(0),
+  topScores: z.object({
+    tenRounds: z.array(TopScoreItemSchema).max(3).default([]),
+    survival: z.array(TopScoreItemSchema).max(3).default([]),
   }),
-  history: z.object({
-    "10-rounds": z.array(HistoryItemSchema).max(3).default([]),
-    survival: z.array(HistoryItemSchema).max(3).default([]),
-  }),
-  preferences: z.object({
-    darkMode: z.boolean().default(false),
-    soundEnabled: z.boolean().default(true),
-  }),
+  preferences: PreferencesSchema,
 });
-export type StorageData = z.infer<typeof StorageDataSchema>;
+export type StorageData = z.output<typeof StorageDataSchema>;
 
-// デフォルト値
-export const defaultStorageData: StorageData = {
-  bestScores: { "10-rounds": 0, survival: 0 },
-  history: { "10-rounds": [], survival: [] },
+// as const satisfies で型チェック + 不変性を両立
+export const defaultStorageData = {
+  topScores: { tenRounds: [], survival: [] },
   preferences: { darkMode: false, soundEnabled: true },
-};
+} as const satisfies StorageData;
 ```
 
 #### 結果データ（`features/result/result.schema.ts`）
@@ -250,9 +279,10 @@ export const GameResultSchema = z.object({
   mode: GameModeSchema,
   score: z.number().int().min(0),
   isNewRecord: z.boolean(),
+  rank: z.number().int().min(1).max(3).nullable(),
   previousBest: z.number().int().min(0),
 });
-export type GameResult = z.infer<typeof GameResultSchema>;
+export type GameResult = z.output<typeof GameResultSchema>;
 ```
 
 ### バリデーション実装例

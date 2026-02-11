@@ -206,16 +206,32 @@ type GameMode = keyof typeof MODE_NAMES;
 const modeName = MODE_NAMES[mode];
 ```
 
+#### 定数の定義場所
+
+- アプリ全体で共有する定数は `src/consts/` 配下にファイルを作成して配置する
+- `as const` で不変にし、型は `typeof` から派生させる
+
 #### Zod スキーマとの連携
 
 ```typescript
-// ✅ 良い例: Zod から型を生成
-import { z } from "zod";
+// ✅ 良い例: 定数（src/consts/）から Zod スキーマを派生させる
+import { GAME_MODES } from "../../consts/game";
 
-export const GameModeSchema = z.enum(["tenRounds", "survival"]);
-export type GameMode = z.infer<typeof GameModeSchema>;
+const gameModeValues = Object.values(GAME_MODES) as [string, ...string[]];
+export const GameModeSchema = z.enum(gameModeValues);
 
-// スキーマと型が常に同期される
+// 型は z.output で取得（z.infer ではなく z.output を使用）
+export type GameState = z.output<typeof GameStateSchema>;
+```
+
+#### 定数オブジェクトの不変性
+
+```typescript
+// ✅ 良い例: as const satisfies で型チェック + 不変性を両立
+export const defaultStorageData = {
+  topScores: { tenRounds: [], survival: [] },
+  preferences: { darkMode: false, soundEnabled: true },
+} as const satisfies StorageData;
 ```
 
 #### オプショナル型の表現
