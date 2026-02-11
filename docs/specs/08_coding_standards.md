@@ -325,23 +325,36 @@ data.topScores.tenRounds.push(newScore); // ミューテーション
 #### 早期リターン（else 句を避ける）
 
 ```typescript
-// ✅ 良い例: 早期リターン
-export const getBestScore = (mode: GameMode): number => {
-  if (!data.topScores[mode].length) {
-    return 0;
-  }
+// ✅ 良い例: 1行で完結する場合はブラケットなしアロー関数
+export const getBestScore = (data: StorageData, mode: GameMode): number =>
+  Math.max(0, ...data.topScores[mode].map((item) => item.score));
 
-  return data.topScores[mode][0].score;
+// ✅ 良い例: 早期リターンで else を避ける
+export const getLabel = (score: number): string => {
+  if (score === 0) return "未プレイ";
+  return `${String(score)}点`;
 };
 
 // ❌ 悪い例: else 句
-export const getBestScore = (mode: GameMode): number => {
-  if (data.topScores[mode].length) {
-    return data.topScores[mode][0].score;
+export const getLabel = (score: number): string => {
+  if (score === 0) {
+    return "未プレイ";
   } else {
-    return 0;
+    return `${String(score)}点`;
   }
 };
+```
+
+#### 配列のインデックスアクセス
+
+```typescript
+// ✅ 良い例: Array.at() を使用
+const first = scores.at(0);
+const last = scores.at(-1);
+
+// ❌ 悪い例: ブラケットによるインデックスアクセス
+const first = scores[0];
+const last = scores[scores.length - 1];
 ```
 
 #### Literal Union 型の分岐

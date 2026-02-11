@@ -157,8 +157,8 @@ export const HomePage = () => {
   const { data } = useGameStorage();
 
   // 利用可能なデータ
-  const tenRoundsBest = data.topScores.tenRounds[0]?.score || 0;
-  const survivalBest = data.topScores.survival[0]?.score || 0;
+  const tenRoundsBest = data.topScores.tenRounds.at(0)?.score ?? 0;
+  const survivalBest = data.topScores.survival.at(0)?.score ?? 0;
   const tenRoundsTop3 = data.topScores.tenRounds; // 最大3件
   const survivalTop3 = data.topScores.survival; // 最大3件
 
@@ -227,7 +227,7 @@ export const HomePage = () => {
           mode="tenRounds"
           title="🎯 10回モード"
           description="10回プレイして何回当てられる？"
-          bestScore={data.topScores.tenRounds[0]?.score}
+          bestScore={data.topScores.tenRounds.at(0)?.score}
           onSelect={() => handleSelectMode("tenRounds")}
         />
 
@@ -235,7 +235,7 @@ export const HomePage = () => {
           mode="survival"
           title="⚡ サバイバル"
           description="外れるまで続ける。あなたの限界は？"
-          bestScore={data.topScores.survival[0]?.score}
+          bestScore={data.topScores.survival.at(0)?.score}
           onSelect={() => handleSelectMode("survival")}
         />
       </div>

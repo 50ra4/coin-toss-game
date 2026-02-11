@@ -119,16 +119,8 @@ export const defaultStorageData = {
 ### ベストスコア取得
 
 ```typescript
-/**
- * 指定モードのベストスコアを取得
- * @param mode ゲームモード
- * @returns ベストスコア（記録がない場合は0）
- */
-export const getBestScore = (data: StorageData, mode: GameMode): number => {
-  const scores = data.topScores[mode];
-  if (scores.length === 0) return 0;
-  return scores[0].score; // 降順ソート済みのため先頭が最高
-};
+export const getBestScore = (data: StorageData, mode: GameMode): number =>
+  Math.max(0, ...data.topScores[mode].map((item) => item.score));
 ```
 
 ### トップスコア更新

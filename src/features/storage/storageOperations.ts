@@ -38,11 +38,8 @@ export const saveStorageData = (data: StorageData): void => {
   }
 };
 
-export const getBestScore = (data: StorageData, mode: GameMode): number => {
-  const scores = data.topScores[mode];
-  if (scores.length === 0) return 0;
-  return scores[0].score;
-};
+export const getBestScore = (data: StorageData, mode: GameMode): number =>
+  Math.max(0, ...data.topScores[mode].map((item) => item.score));
 
 export const updateTopScores = (
   data: StorageData,
