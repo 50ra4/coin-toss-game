@@ -107,7 +107,7 @@ pnpm check             # 全チェック一括実行(format + lint + type + test
 
 ## 仕様書
 
-詳細な仕様は `docs/specs/` 配下の8ファイルを参照:
+詳細な仕様は `docs/` 配下の8ファイルを参照:
 
 - `01_requirements.md` — 要件定義
 - `02_architecture.md` — アーキテクチャ設計（Zodスキーマ定義、アニメーション仕様含む）
