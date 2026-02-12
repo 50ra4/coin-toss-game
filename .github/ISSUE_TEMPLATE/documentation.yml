@@ -1,0 +1,46 @@
+name: "\U0001F4DD ドキュメント改善"
+description: "ドキュメントの追加・修正・改善"
+labels: ["documentation"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ドキュメント改善の提案ありがとうございます。
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: 改善の概要
+      description: どのドキュメントに対してどのような改善を行いたいかを説明してください。
+      placeholder: 例）READMEにローカル開発環境のセットアップ手順を追加したい
+    validations:
+      required: true
+
+  - type: dropdown
+    id: type
+    attributes:
+      label: 改善の種類
+      description: ドキュメント改善の種類を選択してください。
+      options:
+        - 新規ドキュメントの追加
+        - 既存ドキュメントの修正
+        - 既存ドキュメントの内容更新
+        - 誤字・脱字の修正
+    validations:
+      required: true
+
+  - type: textarea
+    id: details
+    attributes:
+      label: 詳細
+      description: 具体的にどのような内容を追加・修正したいかを記載してください。
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: 補足情報
+      description: その他の関連情報があれば記載してください。
+    validations:
+      required: false

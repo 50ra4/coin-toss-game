@@ -1,0 +1,92 @@
+name: "\U0001F41B バグ報告"
+description: "バグや不具合の報告"
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        バグ報告ありがとうございます。以下の項目をできるだけ詳しく記入してください。
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: バグの概要
+      description: バグの内容を簡潔に説明してください。
+      placeholder: 例）ゲーム結果画面でシェアボタンを押しても共有ダイアログが表示されない
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: 再現手順
+      description: バグを再現するための手順を記載してください。
+      placeholder: |
+        1. ホーム画面で「10ラウンドモード」を選択
+        2. ゲームを最後までプレイ
+        3. 結果画面で「Xでシェア」ボタンを押す
+        4. 何も起こらない
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期待される動作
+      description: 本来どのように動作すべきかを説明してください。
+      placeholder: 例）Xのシェア画面が新しいタブで開かれる
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: 実際の動作
+      description: 実際にどのような動作になるかを説明してください。
+      placeholder: 例）ボタンをクリックしても何も反応しない
+    validations:
+      required: true
+
+  - type: dropdown
+    id: browser
+    attributes:
+      label: ブラウザ
+      description: バグが発生したブラウザを選択してください。
+      multiple: true
+      options:
+        - Chrome
+        - Firefox
+        - Safari
+        - Edge
+        - LINE内ブラウザ
+        - その他
+    validations:
+      required: true
+
+  - type: dropdown
+    id: device
+    attributes:
+      label: デバイス
+      description: バグが発生したデバイスを選択してください。
+      options:
+        - PC
+        - スマートフォン
+        - タブレット
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: スクリーンショット
+      description: 可能であればスクリーンショットを添付してください。
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: 補足情報
+      description: その他の関連情報があれば記載してください（コンソールエラー、OS情報など）。
+    validations:
+      required: false
