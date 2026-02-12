@@ -2,8 +2,8 @@
 
 ## プロジェクト概要
 
-**プロジェクト名**: コイントス予想ゲーム（Coin Toss Game）  
-**アーキテクチャタイプ**: SPA（Single Page Application）  
+**プロジェクト名**: コイントス予想ゲーム（Coin Toss Game）
+**アーキテクチャタイプ**: SPA（Single Page Application）
 **デプロイ形式**: 静的サイト（GitHub Pages）
 
 ---
@@ -41,12 +41,14 @@ graph TB
 | **スタイリング**                 | Tailwind CSS     | ユーティリティファーストCSS |
 | **アニメーション**               | Framer Motion    | コイントスアニメーション    |
 | **音声**                         | Web Audio API    | 効果音のリアルタイム生成    |
-| **ルーティング**                 | React Router v6  | SPA ルーティング            |
+| **ルーティング**                 | React Router v7  | SPA ルーティング            |
 | **ストレージ**                   | LocalStorage API | スコア・設定の永続化        |
 | **ホスティング**                 | GitHub Pages     | 静的サイトホスティング      |
 | **広告**                         | Google AdSense   | 収益化                      |
 | **LINE 連携**                    | LINE LIFF SDK    | LINE内ブラウザ最適化        |
 | **OGP**                          | HTML meta タグ   | SNS シェア最適化            |
+
+> 依存パッケージの詳細（バージョン含む）は `package.json` を参照。
 
 ---
 
@@ -87,44 +89,50 @@ coin-toss-game/
 │   ├── favicon.ico
 │   └── og-image.png            # OGP画像
 ├── src/
+│   ├── consts/                 # アプリ全体の定数定義
+│   │   └── game.ts             # GameMode, CoinSide, MODE_NAMES, SCORE_UNITS
 │   ├── components/             # 再利用可能なUIコンポーネント（Pure）
-│   │   ├── Button/
-│   │   │   ├── Button.tsx
-│   │   │   └── Button.stories.tsx
-│   │   ├── Card/
-│   │   ├── Modal/
-│   │   ├── ToggleSwitch/       # ダークモード・ミュート切り替え
-│   │   └── AdPlaceholder/      # 広告プレースホルダー
+│   │   ├── Button/Button.tsx
+│   │   ├── Card/Card.tsx
+│   │   ├── Modal/Modal.tsx
+│   │   ├── ToggleSwitch/ToggleSwitch.tsx
+│   │   ├── GlobalHeader/GlobalHeader.tsx
+│   │   ├── AdPlaceholder/AdPlaceholder.tsx
+│   │   └── ConfettiEffect/ConfettiEffect.tsx
 │   ├── features/               # 機能固有のコンポーネント・ロジック
 │   │   ├── game/               # ゲームロジック
 │   │   │   ├── game.schema.ts  # Zodスキーマ定義
 │   │   │   ├── useGameLogic.ts # ゲームロジックフック
-│   │   │   ├── CoinToss/
-│   │   │   │   ├── CoinToss.tsx
-│   │   │   │   └── CoinToss.stories.tsx
-│   │   │   └── PredictionButton/
+│   │   │   ├── CoinFlip3D/CoinFlip3D.tsx
+│   │   │   ├── PredictionButton/PredictionButton.tsx
+│   │   │   ├── ScoreDisplay/ScoreDisplay.tsx
+│   │   │   ├── ResultFeedback/ResultFeedback.tsx
+│   │   │   └── StreakNotification/StreakNotification.tsx
 │   │   ├── result/             # 結果画面
 │   │   │   ├── result.schema.ts
-│   │   │   ├── ResultSummary/
-│   │   │   └── ShareButtons/
+│   │   │   ├── ScoreCard/ScoreCard.tsx
+│   │   │   ├── TopScoresComparison/TopScoresComparison.tsx
+│   │   │   ├── NewRecordAnimation/NewRecordAnimation.tsx
+│   │   │   ├── ShareSection/ShareSection.tsx
+│   │   │   └── MotivationMessage/MotivationMessage.tsx
+│   │   ├── home/               # ホーム画面
+│   │   │   ├── HeroCoin/HeroCoin.tsx
+│   │   │   └── LeaderBoard/LeaderBoard.tsx
 │   │   ├── mode/               # モード選択
-│   │   │   ├── mode.schema.ts
-│   │   │   └── ModeSelector/
+│   │   │   └── ModeCard/ModeCard.tsx
 │   │   └── storage/            # ローカルストレージ管理
 │   │       ├── storage.schema.ts
+│   │       ├── storageOperations.ts
 │   │       └── useGameStorage.ts
 │   ├── services/               # 副作用を伴う再利用可能なロジック
 │   │   ├── audio.service.ts    # Web Audio API ラッパー
 │   │   ├── share.service.ts    # SNS シェア処理
 │   │   └── liff.service.ts     # LINE LIFF 連携
 │   ├── hooks/                  # 汎用カスタムフック
-│   │   ├── useLocalStorage.ts  # ローカルストレージ操作（汎用）
 │   │   ├── useDarkMode.ts      # ダークモード管理
 │   │   └── useSound.ts         # 効果音再生
 │   ├── utils/                  # ユーティリティ関数
-│   │   ├── coinFlip.ts         # コイントス結果生成
-│   │   ├── formatScore.ts      # スコアフォーマット
-│   │   └── validation.ts       # Zod バリデーションヘルパー
+│   │   └── coinFlip.ts         # コイントス結果生成
 │   ├── styles/                 # グローバルスタイル
 │   │   └── globals.css
 │   ├── pages/                  # ページコンポーネント
@@ -135,12 +143,21 @@ coin-toss-game/
 │   ├── App.tsx                 # ルートコンポーネント
 │   ├── main.tsx                # エントリーポイント
 │   └── vite-env.d.ts
+├── e2e/                        # E2Eテスト（Playwright）
+│   ├── home.spec.ts
+│   ├── game.spec.ts
+│   └── result.spec.ts
 ├── index.html                  # HTMLテンプレート（OGP設定含む）
 ├── package.json
 ├── tsconfig.json
-├── tailwind.config.js
+├── tsconfig.node.json
+├── tsconfig.e2e.json
+├── tailwind.config.ts
 ├── vite.config.ts
-└── README.md
+├── vitest.config.ts
+├── playwright.config.ts
+├── .nvmrc                      # Node.js バージョン指定
+└── eslint.config.js
 ```
 
 ---
@@ -164,7 +181,7 @@ coin-toss-game/
   - カスタムフックを利用（ビジネスロジック含む）
   - ドメイン知識を含む
   - このプロジェクト固有
-- **例**: `CoinToss`, `PredictionButton`, `ResultSummary`
+- **例**: `CoinFlip3D`, `PredictionButton`, `ShareSection`
 
 ### 3. ページコンポーネント（`pages/`）
 
@@ -179,157 +196,23 @@ coin-toss-game/
 
 ## 状態管理設計
 
-### 定数定義（`consts/game.ts`）
+### 定数定義
 
 アプリ全体で共有する定数は `src/consts/` 配下に配置する。`as const` で不変にし、型は `typeof` から派生させる。
 
-```typescript
-export const GAME_MODES = {
-  tenRounds: "tenRounds",
-  survival: "survival",
-} as const;
-
-export type GameMode = (typeof GAME_MODES)[keyof typeof GAME_MODES];
-
-export const COIN_SIDES = {
-  heads: "heads",
-  tails: "tails",
-} as const;
-
-export type CoinSide = (typeof COIN_SIDES)[keyof typeof COIN_SIDES];
-
-export const MODE_NAMES = {
-  tenRounds: "10回モード",
-  survival: "サバイバルモード",
-} as const;
-
-export const SCORE_UNITS = {
-  tenRounds: "回正解",
-  survival: "連続正解",
-} as const;
-```
+> 実装は `src/consts/game.ts` を参照。
 
 ### Zod スキーマ定義
 
 Zod スキーマは `src/consts/` の定数から派生させる。型の取得には `z.infer` ではなく `z.output` を使用する。
 
-#### ゲーム状態（`features/game/game.schema.ts`）
+| スキーマファイル                     | 内容                                        |
+| ------------------------------------ | ------------------------------------------- |
+| `features/game/game.schema.ts`       | ゲーム状態（GameState, GameMode, CoinSide） |
+| `features/storage/storage.schema.ts` | ストレージデータ（TopScore, Preferences）   |
+| `features/result/result.schema.ts`   | 結果データ（GameResult）                    |
 
-```typescript
-import { z } from "zod";
-import { COIN_SIDES, GAME_MODES } from "../../consts/game";
-
-const gameModeValues = Object.values(GAME_MODES) as [string, ...string[]];
-export const GameModeSchema = z.enum(gameModeValues);
-
-const coinSideValues = Object.values(COIN_SIDES) as [string, ...string[]];
-export const CoinSideSchema = z.enum(coinSideValues);
-
-export const GameStateSchema = z.object({
-  mode: GameModeSchema,
-  currentRound: z.number().int().min(1),
-  score: z.number().int().min(0),
-  isPlaying: z.boolean(),
-  coinResult: CoinSideSchema.nullable(),
-  prediction: CoinSideSchema.nullable(),
-  consecutiveCorrect: z.number().int().min(0),
-});
-export type GameState = z.output<typeof GameStateSchema>;
-```
-
-#### ローカルストレージ（`features/storage/storage.schema.ts`）
-
-```typescript
-import { z } from "zod";
-
-export const TopScoreItemSchema = z.object({
-  score: z.number().int().min(0),
-});
-export type TopScoreItem = z.output<typeof TopScoreItemSchema>;
-
-export const PreferencesSchema = z.object({
-  darkMode: z.boolean().default(false),
-  soundEnabled: z.boolean().default(true),
-});
-export type Preferences = z.output<typeof PreferencesSchema>;
-
-export const StorageDataSchema = z.object({
-  topScores: z.object({
-    tenRounds: z.array(TopScoreItemSchema).max(3).default([]),
-    survival: z.array(TopScoreItemSchema).max(3).default([]),
-  }),
-  preferences: PreferencesSchema,
-});
-export type StorageData = z.output<typeof StorageDataSchema>;
-
-// as const satisfies で型チェック + 不変性を両立
-export const defaultStorageData = {
-  topScores: { tenRounds: [], survival: [] },
-  preferences: { darkMode: false, soundEnabled: true },
-} as const satisfies StorageData;
-```
-
-#### 結果データ（`features/result/result.schema.ts`）
-
-```typescript
-import { z } from "zod";
-import { GameModeSchema } from "../game/game.schema";
-
-export const GameResultSchema = z.object({
-  mode: GameModeSchema,
-  score: z.number().int().min(0),
-  isNewRecord: z.boolean(),
-  rank: z.number().int().min(1).max(3).nullable(),
-  previousBest: z.number().int().min(0),
-});
-export type GameResult = z.output<typeof GameResultSchema>;
-```
-
-### バリデーション実装例
-
-#### LocalStorage からの復元（`features/storage/useGameStorage.ts`）
-
-```typescript
-import {
-  StorageDataSchema,
-  defaultStorageData,
-  type StorageData,
-} from "./storage.schema";
-
-const STORAGE_KEY = "coinTossGame";
-
-export const useGameStorage = () => {
-  const loadData = (): StorageData => {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (!raw) return defaultStorageData;
-
-      const parsed = JSON.parse(raw);
-      // Zod でバリデーション
-      const validated = StorageDataSchema.parse(parsed);
-      return validated;
-    } catch (error) {
-      console.error(
-        "LocalStorage データが不正です。デフォルト値を使用します:",
-        error,
-      );
-      return defaultStorageData;
-    }
-  };
-
-  const saveData = (data: StorageData): void => {
-    try {
-      // 保存前にもバリデーション
-      const validated = StorageDataSchema.parse(data);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(validated));
-    } catch (error) {
-      console.error("保存データが不正です:", error);
-    }
-  };
-
-  // ... その他の処理
-};
-```
+> 各スキーマの実装は上記ソースファイルを参照。
 
 ### 状態の流れ
 
@@ -342,24 +225,21 @@ export const useGameStorage = () => {
 
 ## ルーティング設計
 
-### ルート定義（`AppRouter.tsx`）
+### ルート定義
 
-```typescript
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import HomePage from './pages/HomePage';
-import GamePage from './pages/GamePage';
-import ResultPage from './pages/ResultPage';
+React Router v7 のライブラリモード（BrowserRouter）を使用。
 
-export const AppRouter = () => (
-  <BrowserRouter basename="/coin-toss">
-    <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/game/:mode" element={<GamePage />} />
-      <Route path="/result" element={<ResultPage />} />
-    </Routes>
-  </BrowserRouter>
-);
-```
+| パス          | ページ       | 説明                               |
+| ------------- | ------------ | ---------------------------------- |
+| `/`           | `HomePage`   | モード選択画面                     |
+| `/game/:mode` | `GamePage`   | ゲーム画面（tenRounds / survival） |
+| `/result`     | `ResultPage` | 結果画面                           |
+| `*`           | -            | ホームにリダイレクト               |
+
+- `BASE_URL` は `vite.config.ts` の `base` オプションから取得
+- GamePage 内でモードパラメータをバリデーション（不正なモードはリダイレクト）
+
+> 実装は `src/AppRouter.tsx` を参照。
 
 ### 画面遷移フロー
 
@@ -371,54 +251,14 @@ graph LR
     Result -->|同じモード| Game
 ```
 
-### ゲーム結果の受け渡し（React Router の state）
+### ゲーム結果の受け渡し
 
-#### GamePage.tsx（送信側）
+React Router の `location.state` でページ間データを受け渡す。
 
-```typescript
-import { useNavigate } from "react-router-dom";
-import type { GameResult } from "../features/result/result.schema";
+- **GamePage（送信側）**: `navigate("/result", { state: result })` で `GameResult` を渡す
+- **ResultPage（受信側）**: `useLocation().state` を `GameResultSchema.parse()` でバリデーション。state が不正な場合はホームにリダイレクト
 
-const GamePage = () => {
-  const navigate = useNavigate();
-
-  const handleGameEnd = (result: GameResult) => {
-    // React Router の state で結果を渡す
-    navigate("/result", { state: result });
-  };
-
-  // ...
-};
-```
-
-#### ResultPage.tsx（受信側）
-
-```typescript
-import { useLocation, Navigate } from 'react-router-dom';
-import { GameResultSchema } from '../features/result/result.schema';
-
-const ResultPage = () => {
-  const location = useLocation();
-
-  // state をバリデーション
-  const parseResult = () => {
-    try {
-      return GameResultSchema.parse(location.state);
-    } catch {
-      return null;
-    }
-  };
-
-  const result = parseResult();
-
-  // state がない場合はホームにリダイレクト
-  if (!result) {
-    return <Navigate to="/" replace />;
-  }
-
-  // ...
-};
-```
+> 実装は `src/pages/GamePage.tsx`, `src/pages/ResultPage.tsx` を参照。
 
 ---
 
@@ -426,27 +266,15 @@ const ResultPage = () => {
 
 ### コイントスアニメーション
 
-- **ライブラリ**: Framer Motion
-- **実装方針**:
-  - 3D回転風の演出（CSS 3D Transform）
-  - アニメーション時間: 約2秒
-  - ユーザーは途中で予想入力
-  - 結果表示時にアニメーション停止
+| 項目         | 仕様                                                   |
+| ------------ | ------------------------------------------------------ |
+| ライブラリ   | Framer Motion                                          |
+| 演出         | 3D回転風（CSS 3D Transform, rotateY: 1800deg = 5回転） |
+| 時間         | 約2秒                                                  |
+| ユーザー操作 | アニメーション中に予想入力                             |
+| 停止         | 結果表示時にアニメーション停止                         |
 
-```typescript
-// features/game/CoinToss/CoinToss.tsx
-import { motion } from 'framer-motion';
-
-<motion.div
-  animate={{
-    rotateY: [0, 1800], // 5回転
-    scale: [1, 1.2, 1],
-  }}
-  transition={{ duration: 2, ease: 'easeInOut' }}
->
-  {/* コイン画像 */}
-</motion.div>
-```
+> 実装は `src/features/game/CoinFlip3D/CoinFlip3D.tsx` を参照。
 
 ### 新記録達成時の特別演出
 
@@ -457,155 +285,12 @@ import { motion } from 'framer-motion';
 
 #### アニメーション仕様
 
-**1位更新時:**
+| 順位     | 演出                                                  | 時間  |
+| -------- | ----------------------------------------------------- | ----- |
+| 1位      | 紙吹雪 + 王冠回転ズームイン + 華やかな上昇音（3音階） | 1.5秒 |
+| 2位・3位 | 王冠回転ズームイン + シンプルな上昇音                 | 1秒   |
 
-```typescript
-// features/result/NewRecordAnimation.tsx
-import { motion } from 'framer-motion';
-
-export const NewRecordAnimation = ({ rank }: { rank: 1 | 2 | 3 }) => {
-  const isFirstPlace = rank === 1;
-
-  return (
-    <motion.div
-      initial={{ scale: 0, rotate: -180 }}
-      animate={{
-        scale: [0, 1.5, 1],
-        rotate: [0, 360, 0],
-      }}
-      transition={{
-        duration: isFirstPlace ? 1.5 : 1,
-        ease: "easeOut"
-      }}
-    >
-      {/* 紙吹雪エフェクト（1位のみ） */}
-      {isFirstPlace && <ConfettiEffect />}
-
-      {/* 王冠アイコン */}
-      <motion.div
-        animate={{
-          y: [0, -20, 0],
-        }}
-        transition={{
-          repeat: 3,
-          duration: 0.6,
-        }}
-      >
-        👑
-      </motion.div>
-
-      {/* テキスト */}
-      <motion.h2
-        className="text-4xl font-bold text-yellow-400"
-        animate={{
-          scale: [1, 1.2, 1],
-        }}
-        transition={{
-          repeat: 2,
-          duration: 0.5,
-        }}
-      >
-        🎉 NEW RECORD! 🎉
-      </motion.h2>
-
-      {/* サブテキスト */}
-      <p className="text-xl mt-4">
-        {rank === 1 && "自己ベスト更新！"}
-        {rank === 2 && "2位にランクイン！"}
-        {rank === 3 && "3位にランクイン！"}
-      </p>
-    </motion.div>
-  );
-};
-```
-
-**紙吹雪エフェクト:**
-
-```typescript
-// components/ConfettiEffect/ConfettiEffect.tsx
-import { motion } from 'framer-motion';
-
-export const ConfettiEffect = () => {
-  const confettiCount = 50;
-  const colors = ['#FFD700', '#FFA500', '#FF6347', '#4169E1'];
-
-  return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden">
-      {Array.from({ length: confettiCount }).map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute w-2 h-2 rounded-full"
-          style={{
-            backgroundColor: colors[i % colors.length],
-            left: `${Math.random() * 100}%`,
-            top: -20,
-          }}
-          animate={{
-            y: [0, window.innerHeight + 100],
-            x: [0, (Math.random() - 0.5) * 200],
-            rotate: [0, 360 * (Math.random() > 0.5 ? 1 : -1)],
-            opacity: [1, 1, 0],
-          }}
-          transition={{
-            duration: 2 + Math.random() * 2,
-            ease: "easeOut",
-            delay: Math.random() * 0.5,
-          }}
-        />
-      ))}
-    </div>
-  );
-};
-```
-
-#### 効果音
-
-**新記録時の専用サウンド:**
-
-```typescript
-// services/audio.service.ts に追加
-playNewRecordSound(rank: 1 | 2 | 3): void {
-  const ctx = this.getContext();
-  const oscillator = ctx.createOscillator();
-  const gainNode = ctx.createGain();
-
-  oscillator.connect(gainNode);
-  gainNode.connect(ctx.destination);
-
-  if (rank === 1) {
-    // 1位: 華やかな上昇音（3音階）
-    oscillator.frequency.setValueAtTime(440, ctx.currentTime);
-    oscillator.frequency.exponentialRampToValueAtTime(
-      660, ctx.currentTime + 0.3
-    );
-    oscillator.frequency.exponentialRampToValueAtTime(
-      880, ctx.currentTime + 0.6
-    );
-
-    gainNode.gain.setValueAtTime(0.4, ctx.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(
-      0.01, ctx.currentTime + 0.8
-    );
-
-    oscillator.start(ctx.currentTime);
-    oscillator.stop(ctx.currentTime + 0.8);
-  } else {
-    // 2位・3位: シンプルな上昇音
-    oscillator.frequency.setValueAtTime(440, ctx.currentTime);
-    oscillator.frequency.exponentialRampToValueAtTime(
-      660, ctx.currentTime + 0.4
-    );
-
-    gainNode.gain.setValueAtTime(0.3, ctx.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(
-      0.01, ctx.currentTime + 0.5
-    );
-
-    oscillator.start(ctx.currentTime);
-    oscillator.stop(ctx.currentTime + 0.5);
-  }
-}
-```
+> 実装は `src/features/result/NewRecordAnimation/NewRecordAnimation.tsx`, `src/components/ConfettiEffect/ConfettiEffect.tsx` を参照。
 
 #### 表示タイミング
 
@@ -622,8 +307,7 @@ sequenceDiagram
 
     alt 新記録の場合
         Result->>Animation: 表示（rank付き）
-        Animation->>Animation: 紙吹雪 + 王冠アニメーション
-        Animation->>Animation: 効果音再生
+        Animation->>Animation: 紙吹雪 + 王冠アニメーション + 効果音再生
         Note over Animation: 2秒間表示
         Animation->>Result: アニメーション終了
     end
@@ -642,49 +326,15 @@ sequenceDiagram
 
 #### 音種類
 
-1. **コイントス音**: 短いホワイトノイズ（100ms）
-2. **正解音**: 上昇するトーン（440Hz → 880Hz, 200ms）
-3. **不正解音**: 下降するトーン（440Hz → 220Hz, 200ms）
+| 効果音          | 説明                    | 周波数            | 時間  |
+| --------------- | ----------------------- | ----------------- | ----- |
+| コイントス音    | 短いホワイトノイズ      | -                 | 100ms |
+| 正解音          | 上昇するトーン          | 440Hz → 880Hz     | 200ms |
+| 不正解音        | 下降するトーン          | 440Hz → 220Hz     | 200ms |
+| 新記録（1位）   | 華やかな上昇音（3音階） | 440 → 660 → 880Hz | 800ms |
+| 新記録（2-3位） | シンプルな上昇音        | 440 → 660Hz       | 500ms |
 
-#### 実装例（`services/audio.service.ts`）
-
-```typescript
-export class AudioService {
-  private context: AudioContext | null = null;
-
-  private getContext(): AudioContext {
-    if (!this.context) {
-      this.context = new AudioContext();
-    }
-    return this.context;
-  }
-
-  playCorrectSound(): void {
-    const ctx = this.getContext();
-    const oscillator = ctx.createOscillator();
-    const gainNode = ctx.createGain();
-
-    oscillator.connect(gainNode);
-    gainNode.connect(ctx.destination);
-
-    oscillator.frequency.setValueAtTime(440, ctx.currentTime);
-    oscillator.frequency.exponentialRampToValueAtTime(
-      880,
-      ctx.currentTime + 0.2,
-    );
-
-    gainNode.gain.setValueAtTime(0.3, ctx.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.2);
-
-    oscillator.start(ctx.currentTime);
-    oscillator.stop(ctx.currentTime + 0.2);
-  }
-
-  // playIncorrectSound(), playCoinTossSound() も同様に実装
-}
-
-export const audioService = new AudioService();
-```
+> 実装は `src/services/audio.service.ts` を参照。
 
 ### ミュート設定
 
@@ -696,32 +346,13 @@ export const audioService = new AudioService();
 
 ## ローカルストレージ設計
 
-### 保存データ構造
+> 詳細は `03_database.md` を参照。
 
-```json
-{
-  "coinTossGame": {
-    "bestScores": {
-      "10-rounds": 8,
-      "survival": 15
-    },
-    "history": {
-      "10-rounds": [
-        { "mode": "10-rounds", "score": 7, "timestamp": 1704063600000 },
-        { "mode": "10-rounds", "score": 8, "timestamp": 1704067200000 }
-      ],
-      "survival": [
-        { "mode": "survival", "score": 12, "timestamp": 1704060000000 },
-        { "mode": "survival", "score": 15, "timestamp": 1704070800000 }
-      ]
-    },
-    "preferences": {
-      "darkMode": true,
-      "soundEnabled": true
-    }
-  }
-}
-```
+### 概要
+
+- **キー**: `coinTossGame`
+- **バリデーション**: Zod スキーマで読み込み・保存時に検証
+- **フォールバック**: バリデーション失敗時はデフォルト値を使用
 
 ### データ操作フロー
 
@@ -738,99 +369,27 @@ graph LR
 
 ---
 
-## LINE LIFF 連携設計（Phase 1 に含む）
+## LINE LIFF 連携設計
+
+> 詳細な実装は `04_api.md` および `src/services/liff.service.ts` を参照。
 
 ### 対応方針
 
-- **初期実装**: LIFF SDK を組み込み、LINE 環境を検出
-- **機能**:
-  - LINE内ブラウザで起動時に最適化
-  - LINE シェア機能の強化（`liff.shareTargetPicker()`）
-  - プロフィール情報取得は**しない**（簡易実装）
-
-### 実装（`services/liff.service.ts`）
-
-```typescript
-import liff from "@line/liff";
-
-export class LiffService {
-  private initialized = false;
-
-  async init(liffId: string): Promise<void> {
-    if (this.initialized) return;
-
-    try {
-      await liff.init({ liffId });
-      this.initialized = true;
-    } catch (error) {
-      console.error("LIFF初期化エラー:", error);
-    }
-  }
-
-  isInLineApp(): boolean {
-    return this.initialized && liff.isInClient();
-  }
-
-  async shareResult(message: string): Promise<void> {
-    if (!this.isInLineApp()) {
-      // LINE外の場合は通常のシェア
-      return;
-    }
-
-    try {
-      await liff.shareTargetPicker([
-        {
-          type: "text",
-          text: message,
-        },
-      ]);
-    } catch (error) {
-      console.error("LINEシェアエラー:", error);
-    }
-  }
-}
-
-export const liffService = new LiffService();
-```
-
-### 環境変数
-
-```env
-VITE_LIFF_ID=xxxx-xxxxxxxx  # LINE Developers で取得
-```
+- LINE内ブラウザで起動時のみ LIFF SDK を初期化
+- LINE シェア機能の強化（`liff.shareTargetPicker()`）
+- プロフィール情報取得は**しない**（簡易実装）
+- 初期化失敗は非致命的エラー（通常モードにフォールバック）
 
 ---
 
 ## 広告設計
 
-### Google AdSense 配置
+> 詳細な実装は `04_api.md` を参照。
 
 - **表示タイミング**: ゲーム終了後の結果画面
 - **配置**: SNSシェアボタンの上または下
 - **デザイン**: レスポンシブ広告（横幅100%）
-
-### エラー時の表示（`components/AdPlaceholder/AdPlaceholder.tsx`）
-
-```typescript
-type Props = {
-  isLoaded: boolean;
-};
-
-export const AdPlaceholder = ({ isLoaded }: Props) => {
-  if (isLoaded) {
-    return <div id="adsense-container">{/* AdSense スクリプト */}</div>;
-  }
-
-  // 広告が読み込まれない場合
-  return (
-    <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-8 text-center">
-      <p className="text-gray-400 dark:text-gray-600 text-sm">
-        広告欄 募集中
-      </p>
-    </div>
-  );
-};
-```
+- **エラー時**: プレースホルダーで「広告欄」を表示
 
 ---
 
@@ -874,6 +433,8 @@ export const AdPlaceholder = ({ isLoaded }: Props) => {
 
 ## デプロイフロー
 
+> 詳細は `07_deployment.md` を参照。
+
 ```mermaid
 graph LR
     Dev[ローカル開発] -->|git push| GitHub[GitHub Repository]
@@ -882,50 +443,11 @@ graph LR
     GHP -->|配信| User[ユーザー]
 ```
 
-### GitHub Actions 自動デプロイ
-
-```yaml
-# .github/workflows/deploy.yml
-name: Deploy to GitHub Pages
-on:
-  push:
-    branches: [main]
-jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 20
-      - run: npm ci
-      - run: npm run build
-      - uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
-```
-
 ---
 
 ## 拡張性の考慮
 
 ### Phase 3（ネイティブアプリ）への拡張: Capacitor
-
-#### Capacitor vs React Native 比較
-
-| 項目                         | Capacitor                                 | React Native                         |
-| ---------------------------- | ----------------------------------------- | ------------------------------------ |
-| **既存コードの流用**         | ✅ React Web コードをほぼそのまま利用可能 | ❌ React Native 専用に書き直しが必要 |
-| **学習コスト**               | ✅ Web 技術のみ（HTML/CSS/JS）            | ❌ React Native 独自の概念を学習     |
-| **開発効率**                 | ✅ 1つのコードベースで Web/iOS/Android    | ⚠️ Web は別途構築が必要              |
-| **パフォーマンス**           | ⚠️ WebView ベース（やや遅い）             | ✅ ネイティブコンポーネント（高速）  |
-| **UI/UX**                    | ⚠️ Web ライクな見た目                     | ✅ ネイティブライクな見た目          |
-| **プラグインエコシステム**   | ✅ 豊富（Cordova プラグインも利用可）     | ✅ 非常に豊富                        |
-| **アニメーション**           | ⚠️ 60fps 維持がやや難しい                 | ✅ 滑らか                            |
-| **ビルドサイズ**             | ⚠️ やや大きい（WebView 含む）             | ✅ 最適化しやすい                    |
-| **メンテナンス**             | ✅ Web と同じコードベース                 | ❌ Web と Native で二重管理          |
-| **このプロジェクトとの相性** | ✅ **最適**                               | ⚠️ オーバースペック                  |
 
 #### Capacitor 採用理由
 
@@ -955,7 +477,7 @@ jobs:
 ### AdSense 読み込みエラー
 
 - **原因**: 広告ブロッカー、審査未通過、ネットワークエラー
-- **対策**: エラー時は `AdPlaceholder` で「広告欄 募集中」を表示
+- **対策**: エラー時は `AdPlaceholder` で「広告欄」を表示
 
 ### LIFF 初期化エラー
 
@@ -968,12 +490,7 @@ jobs:
 
 ### 推奨ツール
 
-- **エディタ**: VSCode
-- **拡張機能**:
-  - ESLint
-  - Prettier
-  - Tailwind CSS IntelliSense
-  - Error Lens（Zod エラー表示）
+- **エディタ**: VSCode（推奨拡張機能は `.vscode/extensions.json` を参照）
 - **ブラウザ**: Chrome DevTools
 
 ### 環境変数（`.env`）
@@ -981,33 +498,7 @@ jobs:
 ```
 VITE_ADSENSE_CLIENT_ID=ca-pub-xxxxx       # AdSense クライアントID
 VITE_LIFF_ID=xxxx-xxxxxxxx                # LINE LIFF ID
-VITE_BASE_URL=https://username.github.io/coin-toss  # デプロイURL
-```
-
----
-
-## 依存パッケージ
-
-```json
-{
-  "dependencies": {
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "react-router-dom": "^6.22.0",
-    "framer-motion": "^11.0.0",
-    "zod": "^3.22.0",
-    "@line/liff": "^2.24.0"
-  },
-  "devDependencies": {
-    "@types/react": "^19.0.0",
-    "@types/react-dom": "^19.0.0",
-    "typescript": "^5.3.0",
-    "vite": "^5.0.0",
-    "tailwindcss": "^3.4.0",
-    "eslint": "^8.56.0",
-    "prettier": "^3.2.0"
-  }
-}
+VITE_BASE_URL=https://username.github.io/coin-toss-game  # デプロイURL
 ```
 
 ---
@@ -1018,9 +509,8 @@ VITE_BASE_URL=https://username.github.io/coin-toss  # デプロイURL
 - 各モジュールは単一責任の原則に従う
 - Zod によるランタイムバリデーションで堅牢性を確保
 - TypeScript の型安全性を最大限活用
-- Storybook は必要に応じて導入（初期は不要）
 
 ---
 
-**作成日**: 2025年  
-**バージョン**: 2.0
+**作成日**: 2025年
+**バージョン**: 3.0

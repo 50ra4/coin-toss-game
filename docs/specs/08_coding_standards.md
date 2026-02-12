@@ -51,26 +51,26 @@ components / button.tsx; // パスカルケースを使う
 
 ```typescript
 // ✅ 良い例: キャメルケース
-const gameMode = "tenRounds";
+const gameMode = 'tenRounds';
 const currentScore = 10;
 const calculateScore = () => {};
 
 // ❌ 悪い例
-const game_mode = "tenRounds"; // スネークケース不可
-const GameMode = "tenRounds"; // 変数は小文字始まり
+const game_mode = 'tenRounds'; // スネークケース不可
+const GameMode = 'tenRounds'; // 変数は小文字始まり
 ```
 
 #### 型・インターフェース名
 
 ```typescript
 // ✅ 良い例: パスカルケース
-type GameMode = "tenRounds" | "survival";
+type GameMode = 'tenRounds' | 'survival';
 interface GameState {
   score: number;
 }
 
 // ❌ 悪い例
-type gameMode = "tenRounds" | "survival"; // 小文字始まり不可
+type gameMode = 'tenRounds' | 'survival'; // 小文字始まり不可
 interface IGameState {} // Iプレフィックス不要
 ```
 
@@ -79,7 +79,7 @@ interface IGameState {} // Iプレフィックス不要
 ```typescript
 // ✅ 良い例: UPPER_SNAKE_CASE（グローバル定数）
 const MAX_SCORE = 100;
-const STORAGE_KEY = "coinTossGame";
+const STORAGE_KEY = 'coinTossGame';
 
 // ✅ 良い例: キャメルケース（ローカル定数）
 const defaultStorageData = {
@@ -88,8 +88,8 @@ const defaultStorageData = {
 
 // ✅ 良い例: as const でリテラル型
 const MODE_NAMES = {
-  tenRounds: "10回モード",
-  survival: "サバイバルモード",
+  tenRounds: '10回モード',
+  survival: 'サバイバルモード',
 } as const;
 ```
 
@@ -115,16 +115,16 @@ export default function Button() {} // named export を優先
 ```typescript
 // ✅ 良い例: const + アロー関数
 export const calculateScore = (mode: GameMode, correct: number): number => {
-  return mode === "tenRounds" ? correct : correct;
+  return mode === 'tenRounds' ? correct : correct;
 };
 
 export const generateCoinFlip = (): CoinSide => {
-  return Math.random() < 0.5 ? "heads" : "tails";
+  return Math.random() < 0.5 ? 'heads' : 'tails';
 };
 
 // ❌ 悪い例: function宣言
 export function calculateScore(mode: GameMode, correct: number): number {
-  return mode === "tenRounds" ? correct : correct;
+  return mode === 'tenRounds' ? correct : correct;
 }
 ```
 
@@ -166,12 +166,27 @@ Array.prototype.customMethod = function <T>(this: T[]): T[] {
 
 ### 型定義
 
+#### 型インポート（`consistent-type-imports` ルール対応）
+
+```typescript
+// ✅ 良い例: 型のみの場合は import type を使用
+import type { GameMode } from '@/consts/game';
+import type { StorageData } from '@/features/storage/storage.schema';
+
+// ✅ 良い例: 値と型を同時にインポートする場合
+import { GAME_MODES } from '@/consts/game';
+import type { GameMode } from '@/consts/game';
+
+// ❌ 悪い例: 型に import type を使わない
+import { GameMode } from '@/consts/game'; // consistent-type-imports エラー
+```
+
 #### Literal Union 型の活用
 
 ```typescript
 // ✅ 良い例: Literal Union 型
-type GameMode = "tenRounds" | "survival";
-type CoinSide = "heads" | "tails";
+type GameMode = 'tenRounds' | 'survival';
+type CoinSide = 'heads' | 'tails';
 
 // ❌ 悪い例: string 型
 type GameMode = string; // 型安全性が低い
@@ -182,22 +197,22 @@ type GameMode = string; // 型安全性が低い
 ```typescript
 // ❌ 禁止: enum
 enum GameMode {
-  TenRounds = "tenRounds",
-  Survival = "survival",
+  TenRounds = 'tenRounds',
+  Survival = 'survival',
 }
 
 // ✅ 良い例: オブジェクトマップ + as const
 const GAME_MODES = {
-  tenRounds: "tenRounds",
-  survival: "survival",
+  tenRounds: 'tenRounds',
+  survival: 'survival',
 } as const;
 
 type GameMode = (typeof GAME_MODES)[keyof typeof GAME_MODES];
 
 // ✅ 良い例: より実用的なパターン
 const MODE_NAMES = {
-  tenRounds: "10回モード",
-  survival: "サバイバルモード",
+  tenRounds: '10回モード',
+  survival: 'サバイバルモード',
 } as const;
 
 type GameMode = keyof typeof MODE_NAMES;
@@ -215,9 +230,10 @@ const modeName = MODE_NAMES[mode];
 
 ```typescript
 // ✅ 良い例: 定数（src/consts/）から Zod スキーマを派生させる
-import { GAME_MODES } from "../../consts/game";
+import type { GameMode } from '@/consts/game';
+import { GAME_MODES } from '@/consts/game';
 
-const gameModeValues = Object.values(GAME_MODES) as [string, ...string[]];
+const gameModeValues = Object.values(GAME_MODES) as [GameMode, ...GameMode[]];
 export const GameModeSchema = z.enum(gameModeValues);
 
 // 型は z.output で取得（z.infer ではなく z.output を使用）
@@ -262,7 +278,7 @@ type OnClick = (event: React.MouseEvent) => void;
 
 // ✅ 良い例: 戻り値の型を明示
 export const calculateScore = (mode: GameMode, correct: number): number => {
-  return mode === "tenRounds" ? correct : correct;
+  return mode === 'tenRounds' ? correct : correct;
 };
 
 // ❌ 悪い例: 戻り値の型省略（複雑な関数）
@@ -331,14 +347,14 @@ export const getBestScore = (data: StorageData, mode: GameMode): number =>
 
 // ✅ 良い例: 早期リターンで else を避ける
 export const getLabel = (score: number): string => {
-  if (score === 0) return "未プレイ";
+  if (score === 0) return '未プレイ';
   return `${String(score)}点`;
 };
 
 // ❌ 悪い例: else 句
 export const getLabel = (score: number): string => {
   if (score === 0) {
-    return "未プレイ";
+    return '未プレイ';
   } else {
     return `${String(score)}点`;
   }
@@ -362,18 +378,18 @@ const last = scores[scores.length - 1];
 ```typescript
 // ✅ 良い例: オブジェクトマップ
 const MODE_NAMES = {
-  tenRounds: "10回モード",
-  survival: "サバイバルモード",
+  tenRounds: '10回モード',
+  survival: 'サバイバルモード',
 } as const;
 
 const modeName = MODE_NAMES[mode];
 
 // ❌ 悪い例: if-else チェーン
 let modeName: string;
-if (mode === "tenRounds") {
-  modeName = "10回モード";
-} else if (mode === "survival") {
-  modeName = "サバイバルモード";
+if (mode === 'tenRounds') {
+  modeName = '10回モード';
+} else if (mode === 'survival') {
+  modeName = 'サバイバルモード';
 }
 ```
 
@@ -411,7 +427,7 @@ export const loadStorageData = (): StorageData => {
     const validated = StorageDataSchema.parse(parsed);
     return validated;
   } catch (error) {
-    console.error("LocalStorage データ読み込みエラー:", error);
+    console.error('LocalStorage データ読み込みエラー:', error);
     return defaultStorageData;
   }
 };
@@ -421,13 +437,13 @@ export const loadStorageData = (): StorageData => {
 
 ```typescript
 // ✅ 良い例: 構造化ログ
-console.error("データ保存エラー:", {
+console.error('データ保存エラー:', {
   key: STORAGE_KEY,
   error: error instanceof Error ? error.message : String(error),
 });
 
 // ❌ 悪い例: 情報不足
-console.error("エラー"); // 何のエラーか不明
+console.error('エラー'); // 何のエラーか不明
 ```
 
 #### エラーの再スロー
@@ -439,7 +455,7 @@ export const saveStorageData = (data: StorageData): void => {
     const validated = StorageDataSchema.parse(data);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(validated));
   } catch (error) {
-    console.error("保存データが不正です:", error);
+    console.error('保存データが不正です:', error);
     throw error; // 呼び出し側でハンドリング
   }
 };
@@ -458,19 +474,38 @@ export const shareToLine = async (text: string): Promise<void> => {
   }
 
   try {
-    await liff.shareTargetPicker([{ type: "text", text }]);
+    await liff.shareTargetPicker([{ type: 'text', text }]);
   } catch (error) {
-    console.error("LINEシェアエラー:", error);
+    console.error('LINEシェアエラー:', error);
     throw error;
   }
 };
 
 // ❌ 悪い例: Promise チェーン
 export const shareToLine = (text: string): Promise<void> => {
-  return liff.shareTargetPicker([{ type: "text", text }]).catch((error) => {
-    console.error("LINEシェアエラー:", error);
+  return liff.shareTargetPicker([{ type: 'text', text }]).catch((error) => {
+    console.error('LINEシェアエラー:', error);
     throw error;
   });
+};
+```
+
+#### Floating Promises（`no-floating-promises` ルール対応）
+
+```typescript
+// ✅ 良い例: void 演算子で意図的に戻り値を無視
+const handleShare = () => {
+  void shareToLine(text);
+};
+
+// ✅ 良い例: await で待機
+const handleShare = async () => {
+  await shareToLine(text);
+};
+
+// ❌ 悪い例: Promise を無視（ESLint エラー）
+const handleShare = () => {
+  shareToLine(text); // @typescript-eslint/no-floating-promises
 };
 ```
 
@@ -597,7 +632,7 @@ export function GamePage() {
 ```typescript
 // ✅ 良い例: 初期値の型推論
 const [score, setScore] = useState(0); // number 型
-const [mode, setMode] = useState<GameMode>("tenRounds"); // 明示的な型
+const [mode, setMode] = useState<GameMode>('tenRounds'); // 明示的な型
 
 // ✅ 良い例: 関数型更新
 setScore((prev) => prev + 1);
@@ -615,14 +650,14 @@ setScore(score + 1); // クロージャの罠
 // ✅ 許容される例: 外部ライブラリとの統合
 useEffect(() => {
   if (gameState.coinResult) {
-    playSound("coinFlip"); // Web Audio API の呼び出し
+    playSound('coinFlip'); // Web Audio API の呼び出し
   }
 }, [gameState.coinResult, playSound]);
 
 // ✅ 許容される例: クリーンアップが必要
 useEffect(() => {
   const timer = setTimeout(() => {
-    navigate("/result");
+    navigate('/result');
   }, 2000);
 
   return () => clearTimeout(timer);
@@ -639,13 +674,13 @@ const totalScore = useMemo(() => score + bonus, [score, bonus]);
 // ❌ 避けるべき: イベントハンドラで十分な場合
 useEffect(() => {
   if (isGameEnd) {
-    navigate("/result");
+    navigate('/result');
   }
 }, [isGameEnd, navigate]);
 
 // ✅ 改善: イベントハンドラで処理
 const handleGameEnd = () => {
-  navigate("/result");
+  navigate('/result');
 };
 ```
 
@@ -702,7 +737,7 @@ const sortedScores = useMemo(() => {
 }, [scores]);
 
 // ❌ 悪い例: 不要なメモ化
-const label = useMemo(() => "ボタン", []); // 単純な文字列は不要
+const label = useMemo(() => 'ボタン', []); // 単純な文字列は不要
 ```
 
 #### カスタムフック
@@ -738,14 +773,14 @@ export const useGame = () => {
 type ButtonProps = {
   label: string;
   onClick: () => void;
-  variant?: "primary" | "secondary";
+  variant?: 'primary' | 'secondary';
   disabled?: boolean;
 };
 
 export function Button({
   label,
   onClick,
-  variant = "primary",
+  variant = 'primary',
   disabled = false,
 }: ButtonProps) {
   // ...
@@ -979,7 +1014,7 @@ return <ResultDisplay result={result} />;
 ```css
 /* ✅ 良い例: 繰り返しの多いパターン */
 .coin-btn {
-  @apply px-6 py-3 rounded-lg font-bold;
+  @apply rounded-lg px-6 py-3 font-bold;
   @apply bg-gradient-to-r from-yellow-400 to-yellow-600;
   @apply hover:from-yellow-500 hover:to-yellow-700;
   @apply transition-all duration-300;
@@ -988,7 +1023,7 @@ return <ResultDisplay result={result} />;
 
 /* ❌ 悪い例: 1箇所でしか使わないスタイル */
 .one-time-use {
-  @apply p-4 bg-white; /* 直接 className に書く */
+  @apply bg-white p-4; /* 直接 className に書く */
 }
 ```
 
@@ -1042,15 +1077,15 @@ describe("Button", () => {
 
 ```typescript
 // ✅ 良い例: 日本語で具体的に
-describe("useGameLogic", () => {
-  it("正解時にスコアが1増える", () => {});
-  it("10回モードで10回終了後にゲームが終了する", () => {});
-  it("サバイバルモードで不正解時にゲームが終了する", () => {});
+describe('useGameLogic', () => {
+  it('正解時にスコアが1増える', () => {});
+  it('10回モードで10回終了後にゲームが終了する', () => {});
+  it('サバイバルモードで不正解時にゲームが終了する', () => {});
 });
 
 // ❌ 悪い例: 抽象的
-describe("useGameLogic", () => {
-  it("works correctly", () => {}); // 何をテストしているか不明
+describe('useGameLogic', () => {
+  it('works correctly', () => {}); // 何をテストしているか不明
 });
 ```
 
@@ -1104,62 +1139,13 @@ update code  # type なし、抽象的
 
 ## ESLint / Prettier 設定
 
-### ESLint ルール（推奨）
+### ESLint 設定
 
-```javascript
-// eslint.config.js
-import js from "@eslint/js";
-import typescript from "@typescript-eslint/eslint-plugin";
-import react from "eslint-plugin-react";
-import reactHooks from "eslint-plugin-react-hooks";
-
-export default [
-  js.configs.recommended,
-  {
-    files: ["**/*.{ts,tsx}"],
-    plugins: {
-      "@typescript-eslint": typescript,
-      react,
-      "react-hooks": reactHooks,
-    },
-    rules: {
-      // TypeScript
-      "@typescript-eslint/no-explicit-any": "error",
-      "@typescript-eslint/no-unused-vars": [
-        "error",
-        { argsIgnorePattern: "^_" },
-      ],
-
-      // React
-      "react/prop-types": "off", // TypeScript で型チェック
-      "react-hooks/rules-of-hooks": "error",
-      "react-hooks/exhaustive-deps": "warn",
-
-      // 一般
-      "no-console": ["warn", { allow: ["warn", "error"] }],
-      "prefer-const": "error",
-      "no-var": "error",
-    },
-  },
-];
-```
-
----
+> 設定は `eslint.config.js` を参照。
 
 ### Prettier 設定
 
-```json
-{
-  "semi": true,
-  "singleQuote": false,
-  "trailingComma": "all",
-  "printWidth": 100,
-  "tabWidth": 2,
-  "useTabs": false,
-  "arrowParens": "always",
-  "endOfLine": "lf"
-}
-```
+> 設定は `.prettierrc` を参照。
 
 ---
 
@@ -1173,7 +1159,7 @@ const data: any = {};
 
 // ✅ unknown を使用
 const data: unknown = {};
-if (typeof data === "object") {
+if (typeof data === 'object') {
   // 型ガードで安全に扱う
 }
 ```
@@ -1194,14 +1180,14 @@ let score = 0;
 ```typescript
 // ❌ 禁止
 enum GameMode {
-  TenRounds = "tenRounds",
-  Survival = "survival",
+  TenRounds = 'tenRounds',
+  Survival = 'survival',
 }
 
 // ✅ オブジェクトマップを使用
 const GAME_MODES = {
-  tenRounds: "tenRounds",
-  survival: "survival",
+  tenRounds: 'tenRounds',
+  survival: 'survival',
 } as const;
 
 type GameMode = (typeof GAME_MODES)[keyof typeof GAME_MODES];
@@ -1287,8 +1273,8 @@ useEffect(() => {
 
 ```typescript
 // ✅ 良い例: ページごとに分割
-const GamePage = lazy(() => import("./pages/GamePage"));
-const ResultPage = lazy(() => import("./pages/ResultPage"));
+const GamePage = lazy(() => import('./pages/GamePage'));
+const ResultPage = lazy(() => import('./pages/ResultPage'));
 ```
 
 ### 2. 画像の最適化
@@ -1348,7 +1334,7 @@ export const ScoreDisplay = React.memo(({ score }: { score: number }) => {
 ```typescript
 // ✅ 良い例: 型で自明
 export const generateCoinFlip = (): CoinSide => {
-  return Math.random() < 0.5 ? "heads" : "tails";
+  return Math.random() < 0.5 ? 'heads' : 'tails';
 }; // コメント不要
 
 // ❌ 悪い例: what を説明
@@ -1388,5 +1374,5 @@ setScore(score + 1); // コード自体が説明になっている
 
 ---
 
-**作成日**: 2025年  
-**バージョン**: 1.1
+**作成日**: 2025年
+**バージョン**: 2.0

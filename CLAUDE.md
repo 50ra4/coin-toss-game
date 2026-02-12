@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## プロジェクト概要
 
-コイントス予想ゲーム — React 19 + Vite + TypeScript の静的SPA。バックエンドなし、LocalStorageのみでデータ永続化。GitHub Pagesにデプロイ。
+コイントス予想ゲーム — React 19 + Vite + TypeScript の静的SPA。バックエンドなし、LocalStorageのみでデータ永続化。GitHub Pagesにデプロイ。Node.js 24.11.1（`.nvmrc`）、pnpm 10.29.2。
 
 ## 開発コマンド
 
@@ -50,7 +50,7 @@ pnpm check             # 全チェック一括実行(format + lint + type + test
 - `/` — ホーム（モード選択）
 - `/game/:mode` — ゲーム画面（tenRounds | survival）
 - `/result` — 結果画面（SNSシェア）
-- basename: `/coin-toss`（GitHub Pages用）
+- basename: `/coin-toss-game/`（GitHub Pages用、`import.meta.env.BASE_URL`）
 - 画面間のデータ受け渡しは location state 経由
 
 ### データ永続化
@@ -61,7 +61,7 @@ pnpm check             # 全チェック一括実行(format + lint + type + test
 ### 外部連携
 
 - LINE LIFF SDK: LINE内ブラウザ時のみ遅延読み込み
-- SNSシェア: LINE / X / Threads（Web Intent URL + Web Share API フォールバック）
+- SNSシェア: LINE / X / Threads（Web Intent URL + Web Share API フォールバック、`isWebShareSupported()` で判定）
 - Google AdSense: 結果画面に表示
 
 ## コーディング規約
@@ -75,6 +75,9 @@ pnpm check             # 全チェック一括実行(format + lint + type + test
 - 配列のインデックスアクセスは `Array.at()` を使用（`arr[0]` ではなく `arr.at(0)`）
 - 1行で return する関数はブラケットなしのアロー関数にする
 - import は `@/` 絶対パスを使用（`../../` 相対パスではなく）
+- 型インポートは `import type` を使用（`consistent-type-imports` ルール）
+- 浮遊Promiseは `void` 演算子で明示的に無視（`no-floating-promises` ルール）
+- イテレータメソッド（`.find()`, `.map()` 等）を優先し、`for...of` ループは避ける
 
 ### React
 
@@ -85,6 +88,12 @@ pnpm check             # 全チェック一括実行(format + lint + type + test
   - 状態に依存しないものはモジュールレベルの定数に抽出
   - propsを持たないコンポーネントは `React.memo` で囲む
 - インラインスタイル禁止（Tailwindクラスのみ使用）
+
+### テスト
+
+- ランダム性のテストは `vi.spyOn(Math, 'random')` を使用（モジュールモックではなく）
+- Vitest + Testing Library + jsdom 環境
+- E2Eは Playwright（Chromium）、設定は `tsconfig.e2e.json` で分離
 
 ### スタイリング
 
@@ -99,6 +108,7 @@ pnpm check             # 全チェック一括実行(format + lint + type + test
 ## 仕様書
 
 詳細な仕様は `docs/specs/` 配下の8ファイルを参照:
+
 - `01_requirements.md` — 要件定義
 - `02_architecture.md` — アーキテクチャ設計（Zodスキーマ定義、アニメーション仕様含む）
 - `03_database.md` — LocalStorageデータ設計
