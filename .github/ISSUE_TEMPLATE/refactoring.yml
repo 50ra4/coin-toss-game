@@ -1,0 +1,70 @@
+name: "\U0001F528 コード改善"
+description: "リファクタリングやコード品質の改善提案"
+labels: ["refactoring"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        コード改善の提案ありがとうございます。以下の項目をできるだけ詳しく記入してください。
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: 改善の概要
+      description: どのような改善を行いたいかを簡潔に説明してください。
+      placeholder: 例）ゲームロジックのカスタムフックを責務ごとに分割したい
+    validations:
+      required: true
+
+  - type: textarea
+    id: current-state
+    attributes:
+      label: 現状の問題点
+      description: 現在のコードにどのような問題がありますか？
+      placeholder: |
+        - useGameロジックが肥大化して可読性が低い
+        - テストが書きにくい構造になっている
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed-changes
+    attributes:
+      label: 提案する変更内容
+      description: 具体的にどのような変更を行いたいですか？
+      placeholder: |
+        - useGameからコイントスのロジックをuseCoinTossに分離
+        - スコア管理をuseScoreに分離
+        - 各フックに対するユニットテストを追加
+    validations:
+      required: true
+
+  - type: textarea
+    id: affected-files
+    attributes:
+      label: 影響範囲
+      description: 変更の影響を受けるファイルやコンポーネントを記載してください。
+      placeholder: |
+        - src/features/game/hooks/useGame.ts
+        - src/features/game/GameScreen.tsx
+    validations:
+      required: false
+
+  - type: dropdown
+    id: breaking-changes
+    attributes:
+      label: 破壊的変更の有無
+      description: この変更は既存の動作に影響しますか？
+      options:
+        - "なし（内部実装の変更のみ）"
+        - "あり（動作への影響あり）"
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: 補足情報
+      description: その他の関連情報があれば記載してください。
+    validations:
+      required: false
