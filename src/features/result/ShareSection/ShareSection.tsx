@@ -3,6 +3,7 @@ import type { GameMode } from '@/consts/game';
 import { Card } from '@/components/Card/Card';
 import {
   generateShareText,
+  getAppUrl,
   shareToX,
   shareToThreads,
   shareViaWebShareAPI,
@@ -48,7 +49,7 @@ export function ShareSection({
       await liffService.shareTargetPicker(shareText);
     } catch {
       window.open(
-        `https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(window.location.origin)}`,
+        `https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(getAppUrl())}`,
         '_blank',
         'noopener,noreferrer',
       );

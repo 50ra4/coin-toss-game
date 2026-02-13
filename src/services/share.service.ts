@@ -12,9 +12,14 @@ type ShareTextParams = {
 const getScoreText = (mode: GameMode, score: number): string =>
   `${score}${SCORE_UNITS[mode]}`;
 
+export const getAppUrl = (): string => {
+  if (import.meta.env.VITE_BASE_URL) return import.meta.env.VITE_BASE_URL;
+  return `${window.location.origin}${import.meta.env.BASE_URL.replace(/\/$/, '')}`;
+};
+
 export const generateShareText = (params: ShareTextParams): string => {
   const { mode, score, bestScore, isNewRecord, rank } = params;
-  const baseUrl = import.meta.env.VITE_BASE_URL || window.location.origin;
+  const baseUrl = getAppUrl();
   const hashtags = '#コイントスゲーム #暇つぶし #ミニゲーム';
 
   if (isNewRecord && rank === 1) {
