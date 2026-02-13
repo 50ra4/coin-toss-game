@@ -7,29 +7,26 @@ import {
 } from './share.service';
 
 describe('getAppUrl', () => {
-  const originalEnv = { ...import.meta.env };
-
   afterEach(() => {
-    import.meta.env.VITE_BASE_URL = originalEnv.VITE_BASE_URL;
-    import.meta.env.BASE_URL = originalEnv.BASE_URL;
+    vi.unstubAllEnvs();
   });
 
   it('VITE_BASE_URLが設定されている場合はそれを返す', () => {
-    import.meta.env.VITE_BASE_URL = 'https://50ra4.github.io/coin-toss-game';
+    vi.stubEnv('VITE_BASE_URL', 'https://50ra4.github.io/coin-toss-game');
 
     expect(getAppUrl()).toBe('https://50ra4.github.io/coin-toss-game');
   });
 
   it('VITE_BASE_URLが未設定の場合はoriginとBASE_URLから組み立てる', () => {
-    import.meta.env.VITE_BASE_URL = '';
-    import.meta.env.BASE_URL = '/coin-toss-game/';
+    vi.stubEnv('VITE_BASE_URL', '');
+    vi.stubEnv('BASE_URL', '/coin-toss-game/');
 
     expect(getAppUrl()).toBe('http://localhost:3000/coin-toss-game');
   });
 
   it('BASE_URLの末尾スラッシュが除去される', () => {
-    import.meta.env.VITE_BASE_URL = '';
-    import.meta.env.BASE_URL = '/app/';
+    vi.stubEnv('VITE_BASE_URL', '');
+    vi.stubEnv('BASE_URL', '/app/');
 
     expect(getAppUrl()).toBe('http://localhost:3000/app');
   });
