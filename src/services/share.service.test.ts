@@ -1,5 +1,36 @@
 import { describe, it, expect, vi, afterEach } from 'vitest';
-import { generateShareText, shareToX, shareToThreads } from './share.service';
+import {
+  generateShareText,
+  getAppUrl,
+  shareToX,
+  shareToThreads,
+} from './share.service';
+
+describe('getAppUrl', () => {
+  afterEach(() => {
+    vi.unstubAllEnvs();
+  });
+
+  it('VITE_BASE_URLが設定されている場合はそれを返す', () => {
+    vi.stubEnv('VITE_BASE_URL', 'https://50ra4.github.io/coin-toss-game');
+
+    expect(getAppUrl()).toBe('https://50ra4.github.io/coin-toss-game');
+  });
+
+  it('VITE_BASE_URLが未設定の場合はoriginとBASE_URLから組み立てる', () => {
+    vi.stubEnv('VITE_BASE_URL', '');
+    vi.stubEnv('BASE_URL', '/coin-toss-game/');
+
+    expect(getAppUrl()).toBe('http://localhost:3000/coin-toss-game');
+  });
+
+  it('BASE_URLの末尾スラッシュが除去される', () => {
+    vi.stubEnv('VITE_BASE_URL', '');
+    vi.stubEnv('BASE_URL', '/app/');
+
+    expect(getAppUrl()).toBe('http://localhost:3000/app');
+  });
+});
 
 describe('generateShareText', () => {
   it('1位の新記録テキストを生成する', () => {
