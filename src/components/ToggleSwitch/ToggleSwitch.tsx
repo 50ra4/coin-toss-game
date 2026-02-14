@@ -9,7 +9,7 @@ type Props = {
 
 export function ToggleSwitch({ label, icon, checked, onChange }: Props) {
   return (
-    <label className="flex items-center gap-1">
+    <div className="flex items-center gap-1">
       <span className="text-sm text-gray-400" aria-hidden="true">
         {icon}
       </span>
@@ -28,6 +28,6 @@ export function ToggleSwitch({ label, icon, checked, onChange }: Props) {
           }`}
         />
       </button>
-    </label>
+    </div>
   );
 }
