@@ -11,6 +11,7 @@ import { ShareSection } from '@/features/result/ShareSection/ShareSection';
 import { MotivationMessage } from '@/features/result/MotivationMessage/MotivationMessage';
 import { AdPlaceholder } from '@/components/AdPlaceholder/AdPlaceholder';
 import { Button } from '@/components/Button/Button';
+import { Icon } from '@/components/Icon/Icon';
 
 export function ResultPage() {
   const location = useLocation();
@@ -42,8 +43,8 @@ export function ResultPage() {
   return (
     <div className="min-h-screen bg-light-gradient dark:bg-casino-gradient">
       <div className="mx-auto max-w-lg px-4 py-8">
-        <h1 className="mb-6 text-center text-2xl font-bold text-amber-700 dark:text-casino-gold">
-          🎊 ゲーム終了！ 🎊
+        <h1 className="mb-6 flex items-center justify-center gap-2 text-center text-2xl font-bold text-amber-700 dark:text-casino-gold">
+          <Icon name="celebration" filled size={28} /> ゲーム終了！
         </h1>
 
         {result.isNewRecord && result.rank !== null && result.rank <= 3 && (
@@ -83,14 +84,14 @@ export function ResultPage() {
 
           <div className="flex flex-col gap-3">
             <Button onClick={handleRetry} variant="primary" className="w-full">
-              🔄 同じモードで再挑戦
+              <Icon name="refresh" size={20} /> 同じモードで再挑戦
             </Button>
             <Button
               onClick={handleGoHome}
               variant="secondary"
               className="w-full"
             >
-              🏠 ホームに戻る
+              <Icon name="home" size={20} /> ホームに戻る
             </Button>
           </div>
         </div>

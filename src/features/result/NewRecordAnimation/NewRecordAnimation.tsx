@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { ConfettiEffect } from '@/components/ConfettiEffect/ConfettiEffect';
+import { Icon } from '@/components/Icon/Icon';
 
 const CONTAINER_INITIAL = { scale: 0, rotate: -180 };
 const CONTAINER_TRANSITION_FIRST = { duration: 1.5, ease: 'easeOut' as const };
@@ -39,18 +40,19 @@ export function NewRecordAnimation({ rank }: Props) {
     >
       {isFirstPlace && <ConfettiEffect />}
       <motion.div
-        className="text-5xl"
+        className="flex justify-center text-5xl"
         animate={CROWN_ANIMATE}
         transition={CROWN_TRANSITION}
       >
-        👑
+        <Icon name="workspace_premium" filled size={48} />
       </motion.div>
       <motion.h2
-        className="text-4xl font-bold text-amber-600 dark:text-casino-lightGold"
+        className="flex items-center justify-center gap-2 text-4xl font-bold text-amber-600 dark:text-casino-lightGold"
         animate={TEXT_ANIMATE}
         transition={TEXT_TRANSITION}
       >
-        🎉 NEW RECORD! 🎉
+        <Icon name="celebration" filled size={36} /> NEW RECORD!{' '}
+        <Icon name="celebration" filled size={36} />
       </motion.h2>
       <p className="mt-4 text-xl">{RANK_MESSAGES[rank]}</p>
     </motion.div>

@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import type { CoinSide } from '@/consts/game';
+import { Icon } from '@/components/Icon/Icon';
 
 const FLIP_ANIMATE = {
   rotateY: [0, 1800],
@@ -20,8 +21,6 @@ type Props = {
 };
 
 export function CoinFlip3D({ result, isFlipping }: Props) {
-  const face = result === 'heads' ? '🌟' : result === 'tails' ? '🌙' : '🪙';
-
   return (
     <div className="flex items-center justify-center py-8">
       <motion.div
@@ -29,7 +28,13 @@ export function CoinFlip3D({ result, isFlipping }: Props) {
         animate={isFlipping ? FLIP_ANIMATE : undefined}
         transition={isFlipping ? FLIP_TRANSITION : undefined}
       >
-        {face}
+        {result === 'heads' ? (
+          <Icon name="star" filled size={64} />
+        ) : result === 'tails' ? (
+          <Icon name="dark_mode" filled size={64} />
+        ) : (
+          <Icon name="monetization_on" filled size={64} />
+        )}
       </motion.div>
     </div>
   );

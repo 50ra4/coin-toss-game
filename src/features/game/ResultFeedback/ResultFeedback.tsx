@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { Icon } from '@/components/Icon/Icon';
 
 const CORRECT_ANIMATE = { scale: [0, 1.2, 1] };
 const INCORRECT_ANIMATE = { x: [0, -10, 10, -10, 10, 0] };
@@ -18,9 +19,13 @@ export function ResultFeedback({ isCorrect }: Props) {
       transition={FEEDBACK_TRANSITION}
     >
       {isCorrect ? (
-        <p className="text-2xl font-bold text-accent-success">✅ 正解！</p>
+        <p className="flex items-center justify-center gap-2 text-2xl font-bold text-accent-success">
+          <Icon name="check_circle" filled size={28} /> 正解！
+        </p>
       ) : (
-        <p className="text-2xl font-bold text-accent-error">❌ 不正解...</p>
+        <p className="flex items-center justify-center gap-2 text-2xl font-bold text-accent-error">
+          <Icon name="cancel" filled size={28} /> 不正解...
+        </p>
       )}
     </motion.div>
   );
