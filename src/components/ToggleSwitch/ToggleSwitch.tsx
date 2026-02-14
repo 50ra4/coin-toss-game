@@ -1,13 +1,18 @@
+import type { ReactNode } from 'react';
+
 type Props = {
   label: string;
+  icon: ReactNode;
   checked: boolean;
   onChange: () => void;
 };
 
-export function ToggleSwitch({ label, checked, onChange }: Props) {
+export function ToggleSwitch({ label, icon, checked, onChange }: Props) {
   return (
-    <label className="flex items-center gap-1.5">
-      <span className="text-xs text-gray-400">{label}</span>
+    <label className="flex items-center gap-1">
+      <span className="text-sm text-gray-400" aria-hidden="true">
+        {icon}
+      </span>
       <button
         role="switch"
         aria-checked={checked}
