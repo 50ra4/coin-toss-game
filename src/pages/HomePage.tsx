@@ -7,6 +7,7 @@ import { GlobalHeader } from '@/components/GlobalHeader/GlobalHeader';
 import { HeroCoin } from '@/features/home/HeroCoin/HeroCoin';
 import { ModeCard } from '@/features/mode/ModeCard/ModeCard';
 import { LeaderBoard } from '@/features/home/LeaderBoard/LeaderBoard';
+import { Icon } from '@/components/Icon/Icon';
 
 export function HomePage() {
   const { data } = useGameStorage();
@@ -35,13 +36,15 @@ export function HomePage() {
 
       <div className="mx-auto grid max-w-6xl grid-cols-1 gap-8 px-4 md:grid-cols-2">
         <ModeCard
-          title="🎯 10回モード"
+          title="10回モード"
+          icon={<Icon name="target" filled size={24} />}
           description="10回プレイして何回当てられる？"
           bestScore={data.topScores.tenRounds.at(0)?.score}
           onSelect={handleSelectTenRounds}
         />
         <ModeCard
-          title="⚡ サバイバル"
+          title="サバイバル"
+          icon={<Icon name="bolt" filled size={24} />}
           description="外れるまで続ける。あなたの限界は？"
           bestScore={data.topScores.survival.at(0)?.score}
           onSelect={handleSelectSurvival}

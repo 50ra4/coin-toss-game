@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 import type { CoinSide } from '@/consts/game';
 import { Button } from '@/components/Button/Button';
+import { Icon } from '@/components/Icon/Icon';
 
 type Props = {
   onPredict: (side: CoinSide) => void;
@@ -23,7 +24,7 @@ export function PredictionButton({ onPredict, disabled }: Props) {
         className="min-w-[120px] text-lg"
         disabled={disabled}
       >
-        🌟 表
+        <Icon name="star" filled size={20} /> 表
       </Button>
       <Button
         onClick={handleTails}
@@ -31,7 +32,7 @@ export function PredictionButton({ onPredict, disabled }: Props) {
         className="min-w-[120px] text-lg"
         disabled={disabled}
       >
-        🌙 裏
+        <Icon name="dark_mode" filled size={20} /> 裏
       </Button>
     </div>
   );

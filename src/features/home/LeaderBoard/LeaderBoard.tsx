@@ -1,7 +1,7 @@
 import type { TopScoreItem } from '@/features/storage/storage.schema';
 import { Card } from '@/components/Card/Card';
-
-const RANK_ICONS = ['🥇', '🥈', '🥉'] as const;
+import { Icon } from '@/components/Icon/Icon';
+import { RankBadge } from '@/components/RankBadge/RankBadge';
 
 type Props = {
   topScores: {
@@ -13,8 +13,9 @@ type Props = {
 export function LeaderBoard({ topScores }: Props) {
   return (
     <div className="mx-auto max-w-6xl px-4 py-8">
-      <h2 className="mb-4 text-center text-xl font-bold text-amber-700 dark:text-casino-gold">
-        🏆 Your Best Records
+      <h2 className="mb-4 flex items-center justify-center gap-2 text-center font-display text-xl font-semibold text-amber-700 dark:text-casino-gold">
+        <Icon name="trophy" filled size={24} />
+        Your Best Records
       </h2>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <ScoreList
@@ -48,14 +49,18 @@ function ScoreList({ title, scores, unit }: ScoreListProps) {
         <p className="text-sm text-gray-500">記録なし</p>
       ) : (
         <ul className="space-y-1">
-          {scores.map((item, index) => (
-            <li
-              key={`${item.score}-${index}`}
-              className="text-sm text-gray-600 dark:text-gray-400"
-            >
-              {`${RANK_ICONS.at(index) ?? ''} ${item.score}${unit}`}
-            </li>
-          ))}
+          {scores.map((item, index) => {
+            const rank = (index + 1) as 1 | 2 | 3;
+            return (
+              <li
+                key={`${item.score}-${index}`}
+                className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400"
+              >
+                <RankBadge rank={rank} />
+                {`${item.score}${unit}`}
+              </li>
+            );
+          })}
         </ul>
       )}
     </Card>

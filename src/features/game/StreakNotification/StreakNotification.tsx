@@ -1,13 +1,14 @@
 import { motion, AnimatePresence } from 'framer-motion';
+import { Icon } from '@/components/Icon/Icon';
 
-const STREAK_MESSAGES = {
-  5: '🔥 Hot Streak!',
-  10: '⚡ Incredible!',
-  15: '🌟 Legendary!',
-  20: '👑 Unstoppable!',
+const STREAK_CONFIG = {
+  5: { icon: 'local_fire_department', text: 'Hot Streak!' },
+  10: { icon: 'bolt', text: 'Incredible!' },
+  15: { icon: 'star', text: 'Legendary!' },
+  20: { icon: 'workspace_premium', text: 'Unstoppable!' },
 } as const;
 
-const STREAK_THRESHOLDS = Object.keys(STREAK_MESSAGES).map(Number);
+const STREAK_THRESHOLDS = Object.keys(STREAK_CONFIG).map(Number);
 
 const ENTER_ANIMATE = { opacity: 1, y: 0, scale: 1 };
 const EXIT_ANIMATE = { opacity: 0, y: -20, scale: 0.8 };
@@ -21,22 +22,22 @@ type Props = {
 export function StreakNotification({ consecutiveCorrect }: Props) {
   const threshold = STREAK_THRESHOLDS.findLast((t) => consecutiveCorrect >= t);
 
-  const message = threshold
-    ? STREAK_MESSAGES[threshold as keyof typeof STREAK_MESSAGES]
+  const config = threshold
+    ? STREAK_CONFIG[threshold as keyof typeof STREAK_CONFIG]
     : null;
 
   return (
     <AnimatePresence>
-      {!!message && (
+      {!!config && (
         <motion.div
           key={threshold}
-          className="py-2 text-center text-lg font-bold text-amber-600 dark:text-casino-lightGold"
+          className="flex items-center justify-center gap-2 py-2 text-center text-lg font-bold text-amber-600 dark:text-casino-lightGold"
           initial={INITIAL_ANIMATE}
           animate={ENTER_ANIMATE}
           exit={EXIT_ANIMATE}
           transition={NOTIFICATION_TRANSITION}
         >
-          {message}
+          <Icon name={config.icon} filled size={24} /> {config.text}
         </motion.div>
       )}
     </AnimatePresence>
