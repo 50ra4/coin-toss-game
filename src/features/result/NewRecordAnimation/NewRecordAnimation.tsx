@@ -46,7 +46,7 @@ export function NewRecordAnimation({ rank }: Props) {
         👑
       </motion.div>
       <motion.h2
-        className="text-4xl font-bold text-casino-lightGold"
+        className="text-4xl font-bold text-amber-600 dark:text-casino-lightGold"
         animate={TEXT_ANIMATE}
         transition={TEXT_TRANSITION}
       >

@@ -15,7 +15,7 @@ export function GlobalHeader({
 }: Props) {
   return (
     <header className="flex items-center justify-between px-4 py-3">
-      <h1 className="min-w-0 truncate text-lg font-bold text-casino-gold">
+      <h1 className="min-w-0 truncate text-lg font-bold text-amber-700 dark:text-casino-gold">
         🪙 Coin Toss Game
       </h1>
       <div className="flex shrink-0 items-center gap-2">

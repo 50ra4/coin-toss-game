@@ -9,8 +9,11 @@ type Props = {
 
 export function ToggleSwitch({ label, icon, checked, onChange }: Props) {
   return (
-    <label className="flex items-center gap-1">
-      <span className="text-sm text-gray-400" aria-hidden="true">
+    <div className="flex items-center gap-1">
+      <span
+        className="text-sm text-gray-500 dark:text-gray-400"
+        aria-hidden="true"
+      >
         {icon}
       </span>
       <button
@@ -19,7 +22,9 @@ export function ToggleSwitch({ label, icon, checked, onChange }: Props) {
         aria-label={label}
         onClick={onChange}
         className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-300 ${
-          checked ? 'bg-casino-gold' : 'bg-gray-600'
+          checked
+            ? 'bg-amber-500 dark:bg-casino-gold'
+            : 'bg-gray-400 dark:bg-gray-600'
         }`}
       >
         <span
@@ -28,6 +33,6 @@ export function ToggleSwitch({ label, icon, checked, onChange }: Props) {
           }`}
         />
       </button>
-    </label>
+    </div>
   );
 }

@@ -13,7 +13,7 @@ type Props = {
 export function LeaderBoard({ topScores }: Props) {
   return (
     <div className="mx-auto max-w-6xl px-4 py-8">
-      <h2 className="mb-4 text-center text-xl font-bold text-casino-gold">
+      <h2 className="mb-4 text-center text-xl font-bold text-amber-700 dark:text-casino-gold">
         🏆 Your Best Records
       </h2>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -41,7 +41,9 @@ type ScoreListProps = {
 function ScoreList({ title, scores, unit }: ScoreListProps) {
   return (
     <Card className="p-4">
-      <h3 className="mb-2 font-bold text-gray-300">{title}</h3>
+      <h3 className="mb-2 font-bold text-gray-700 dark:text-gray-300">
+        {title}
+      </h3>
       {!scores.length ? (
         <p className="text-sm text-gray-500">記録なし</p>
       ) : (
@@ -49,7 +51,7 @@ function ScoreList({ title, scores, unit }: ScoreListProps) {
           {scores.map((item, index) => (
             <li
               key={`${item.score}-${index}`}
-              className="text-sm text-gray-400"
+              className="text-sm text-gray-600 dark:text-gray-400"
             >
               {`${RANK_ICONS.at(index) ?? ''} ${item.score}${unit}`}
             </li>

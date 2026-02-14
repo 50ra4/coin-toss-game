@@ -74,10 +74,10 @@ export function ShareSection({
 
   return (
     <Card className="p-4">
-      <p className="mb-3 text-center text-sm text-gray-400">
+      <p className="mb-3 text-center text-sm text-gray-600 dark:text-gray-400">
         結果をシェアして友達に挑戦状を送ろう！
       </p>
-      <div className="mb-4 rounded-lg bg-casino-black/50 p-3 text-xs text-gray-300">
+      <div className="mb-4 rounded-lg bg-gray-100 p-3 text-xs text-gray-700 dark:bg-casino-black/50 dark:text-gray-300">
         <pre className="whitespace-pre-wrap">{shareText}</pre>
       </div>
       <div className="flex flex-wrap justify-center gap-2">
@@ -101,14 +101,14 @@ export function ShareSection({
         </button>
         <button
           onClick={handleCopy}
-          className="rounded-lg bg-casino-gray px-4 py-2 text-sm font-bold text-gray-300 transition-transform hover:scale-105"
+          className="rounded-lg bg-gray-200 px-4 py-2 text-sm font-bold text-gray-700 transition-transform hover:scale-105 dark:bg-casino-gray dark:text-gray-300"
         >
           Copy
         </button>
         {IS_WEB_SHARE_SUPPORTED && (
           <button
             onClick={handleWebShare}
-            className="rounded-lg bg-casino-gray px-4 py-2 text-sm font-bold text-gray-300 transition-transform hover:scale-105"
+            className="rounded-lg bg-gray-200 px-4 py-2 text-sm font-bold text-gray-700 transition-transform hover:scale-105 dark:bg-casino-gray dark:text-gray-300"
           >
             Share
           </button>

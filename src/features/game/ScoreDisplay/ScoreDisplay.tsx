@@ -16,8 +16,10 @@ export function ScoreDisplay({
 }: Props) {
   return (
     <div className="text-center">
-      <p className="text-sm text-gray-400">{MODE_NAMES[mode]}</p>
-      <p className="text-3xl font-bold text-casino-gold">
+      <p className="text-sm text-gray-600 dark:text-gray-400">
+        {MODE_NAMES[mode]}
+      </p>
+      <p className="text-3xl font-bold text-amber-700 dark:text-casino-gold">
         {mode === 'tenRounds'
           ? `${score} / ${currentRound - 1}`
           : `${consecutiveCorrect} 連続正解`}

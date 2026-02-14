@@ -5,7 +5,9 @@ type Props = {
 
 export function Card({ children, className }: Props) {
   return (
-    <div className={`rounded-xl bg-card-gradient shadow-card ${className}`}>
+    <div
+      className={`rounded-xl bg-white shadow-md dark:bg-card-gradient dark:shadow-card ${className}`}
+    >
       {children}
     </div>
   );

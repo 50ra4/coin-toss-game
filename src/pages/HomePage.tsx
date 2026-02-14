@@ -23,7 +23,7 @@ export function HomePage() {
   }, [navigate]);
 
   return (
-    <div className="min-h-screen bg-casino-gradient">
+    <div className="min-h-screen bg-light-gradient dark:bg-casino-gradient">
       <GlobalHeader
         darkMode={darkMode}
         soundEnabled={soundEnabled}

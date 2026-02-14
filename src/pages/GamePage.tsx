@@ -92,7 +92,7 @@ function GamePageContent({ mode }: ContentProps) {
   }
 
   return (
-    <div className="min-h-screen bg-casino-gradient">
+    <div className="min-h-screen bg-light-gradient dark:bg-casino-gradient">
       <GlobalHeader
         darkMode={darkMode}
         soundEnabled={soundEnabled}
@@ -116,7 +116,9 @@ function GamePageContent({ mode }: ContentProps) {
 
         {state.phase === 'ready' && (
           <div className="py-4">
-            <p className="mb-4 text-center text-gray-400">予想してください</p>
+            <p className="mb-4 text-center text-gray-600 dark:text-gray-400">
+              予想してください
+            </p>
             <PredictionButton
               onPredict={handlePredict}
               disabled={isPredictionDisabled}
@@ -150,10 +152,10 @@ function GamePageContent({ mode }: ContentProps) {
       </div>
 
       <Modal open={showGiveUpModal} onClose={handleGiveUpCancel}>
-        <h2 className="mb-4 text-center text-lg font-bold text-casino-gold">
+        <h2 className="mb-4 text-center text-lg font-bold text-amber-700 dark:text-casino-gold">
           ギブアップしますか？
         </h2>
-        <p className="mb-6 text-center text-sm text-gray-400">
+        <p className="mb-6 text-center text-sm text-gray-600 dark:text-gray-400">
           {`現在のスコア: ${state.score}${SCORE_UNITS[mode]}`}
         </p>
         <div className="flex justify-center gap-4">

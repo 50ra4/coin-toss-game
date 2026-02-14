@@ -40,9 +40,9 @@ export function ResultPage() {
   const unit = SCORE_UNITS[result.mode];
 
   return (
-    <div className="min-h-screen bg-casino-gradient">
+    <div className="min-h-screen bg-light-gradient dark:bg-casino-gradient">
       <div className="mx-auto max-w-lg px-4 py-8">
-        <h1 className="mb-6 text-center text-2xl font-bold text-casino-gold">
+        <h1 className="mb-6 text-center text-2xl font-bold text-amber-700 dark:text-casino-gold">
           🎊 ゲーム終了！ 🎊
         </h1>
 
