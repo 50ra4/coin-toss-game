@@ -61,5 +61,9 @@ export function MotivationMessage({ mode, score }: Props) {
     [mode, score],
   );
 
-  return <p className="text-center text-lg text-gray-400">{message}</p>;
+  return (
+    <p className="text-center text-lg text-gray-600 dark:text-gray-400">
+      {message}
+    </p>
+  );
 }

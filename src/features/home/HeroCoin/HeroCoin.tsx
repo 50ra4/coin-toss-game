@@ -21,7 +21,9 @@ export const HeroCoin = memo(function HeroCoin() {
       >
         🪙
       </motion.div>
-      <p className="text-lg text-gray-400">コインの行方を予想せよ</p>
+      <p className="text-lg text-gray-600 dark:text-gray-400">
+        コインの行方を予想せよ
+      </p>
     </div>
   );
 });

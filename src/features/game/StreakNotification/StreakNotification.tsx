@@ -30,7 +30,7 @@ export function StreakNotification({ consecutiveCorrect }: Props) {
       {!!message && (
         <motion.div
           key={threshold}
-          className="py-2 text-center text-lg font-bold text-casino-lightGold"
+          className="py-2 text-center text-lg font-bold text-amber-600 dark:text-casino-lightGold"
           initial={INITIAL_ANIMATE}
           animate={ENTER_ANIMATE}
           exit={EXIT_ANIMATE}

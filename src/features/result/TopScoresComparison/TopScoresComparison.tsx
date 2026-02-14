@@ -12,7 +12,7 @@ type Props = {
 export function TopScoresComparison({ scores, unit, newRank }: Props) {
   return (
     <Card className="p-4">
-      <h3 className="mb-3 text-center font-bold text-casino-gold">
+      <h3 className="mb-3 text-center font-bold text-amber-700 dark:text-casino-gold">
         🏆 Your Best 3
       </h3>
       {!scores.length ? (
@@ -26,7 +26,9 @@ export function TopScoresComparison({ scores, unit, newRank }: Props) {
               <li
                 key={`${item.score}-${index}`}
                 className={`flex items-center justify-between rounded-lg px-3 py-2 ${
-                  isNew ? 'bg-casino-gold/10 text-casino-gold' : 'text-gray-400'
+                  isNew
+                    ? 'bg-amber-100 text-amber-700 dark:bg-casino-gold/10 dark:text-casino-gold'
+                    : 'text-gray-600 dark:text-gray-400'
                 }`}
               >
                 <span>{`${RANK_ICONS.at(index) ?? ''} ${rank}位`}</span>

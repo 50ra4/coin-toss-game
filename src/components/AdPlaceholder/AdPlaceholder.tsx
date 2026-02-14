@@ -18,7 +18,7 @@ export function AdPlaceholder({
       <div
         className={`rounded-lg bg-gray-100 p-8 text-center dark:bg-gray-800 ${className}`}
       >
-        <p className="text-sm text-gray-400 dark:text-gray-600">広告欄</p>
+        <p className="text-sm text-gray-600 dark:text-gray-400">広告欄</p>
       </div>
     );
   }

@@ -26,7 +26,7 @@ export const defaultStorageData = {
     survival: [],
   },
   preferences: {
-    darkMode: false,
+    darkMode: true,
     soundEnabled: true,
   },
 } as const satisfies StorageData;

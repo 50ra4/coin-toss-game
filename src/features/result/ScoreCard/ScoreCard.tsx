@@ -24,24 +24,26 @@ export function ScoreCard({ mode, score, bestScore }: Props) {
 
   return (
     <Card className="p-6 text-center">
-      <p className="text-sm text-gray-400">{MODE_NAMES[mode]}</p>
+      <p className="text-sm text-gray-600 dark:text-gray-400">
+        {MODE_NAMES[mode]}
+      </p>
       <motion.p
-        className="my-4 text-5xl font-bold text-casino-gold"
+        className="my-4 text-5xl font-bold text-amber-700 dark:text-casino-gold"
         initial={SCORE_INITIAL}
         animate={SCORE_ANIMATE}
         transition={SCORE_TRANSITION}
       >
         {score}
       </motion.p>
-      <p className="text-gray-400">{SCORE_UNITS[mode]}</p>
+      <p className="text-gray-600 dark:text-gray-400">{SCORE_UNITS[mode]}</p>
       {bestScore > 0 && (
         <div className="mt-4">
           <p className="text-sm text-gray-500">
             {`ベスト: ${bestScore}${SCORE_UNITS[mode]}`}
           </p>
-          <div className="mt-1 h-2 overflow-hidden rounded-full bg-casino-gray">
+          <div className="mt-1 h-2 overflow-hidden rounded-full bg-gray-200 dark:bg-casino-gray">
             <motion.div
-              className="h-full rounded-full bg-casino-gold"
+              className="h-full rounded-full bg-amber-500 dark:bg-casino-gold"
               initial={BAR_INITIAL}
               animate={barAnimate}
               transition={BAR_TRANSITION}

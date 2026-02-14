@@ -4,17 +4,17 @@
 
 @layer base {
   body {
-    @apply bg-casino-black text-white antialiased;
+    @apply bg-gray-50 text-gray-900 antialiased dark:bg-casino-black dark:text-white;
   }
 }
 
 @layer components {
   .coin-btn {
-    @apply rounded-lg bg-gradient-to-r from-casino-gold to-casino-lightGold px-6 py-3 font-bold text-casino-black shadow-md transition-all duration-300 hover:shadow-lg;
+    @apply rounded-lg bg-gradient-to-r from-amber-500 to-yellow-500 px-6 py-3 font-bold text-white shadow-md transition-all duration-300 hover:shadow-lg dark:from-casino-gold dark:to-casino-lightGold dark:text-casino-black;
   }
 
   .coin-btn-secondary {
-    @apply rounded-lg border border-casino-gold px-6 py-3 font-bold text-casino-gold transition-all duration-300 hover:bg-casino-gold hover:text-casino-black;
+    @apply rounded-lg border border-amber-600 px-6 py-3 font-bold text-amber-700 transition-all duration-300 hover:bg-amber-600 hover:text-white dark:border-casino-gold dark:text-casino-gold dark:hover:bg-casino-gold dark:hover:text-casino-black;
   }
 }
 
