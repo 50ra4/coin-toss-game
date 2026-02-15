@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import { useNavigate, useParams, Navigate } from 'react-router-dom';
 import type { GameMode } from '@/consts/game';
-import { GAME_MODES, SCORE_UNITS } from '@/consts/game';
+import { SCORE_UNITS } from '@/consts/game';
 import { GameModeSchema } from '@/features/game/game.schema';
 import { useGameLogic } from '@/features/game/useGameLogic';
 import { useGameStorage } from '@/features/storage/useGameStorage';
@@ -138,14 +138,14 @@ function GamePageContent({ mode }: ContentProps) {
           </div>
         )}
 
-        {mode === GAME_MODES.survival && state.phase === 'ready' && (
+        {state.phase === 'ready' && (
           <div className="flex justify-center py-4">
             <Button
               onClick={handleGiveUp}
               variant="secondary"
               className="text-sm"
             >
-              ギブアップ
+              やめる
             </Button>
           </div>
         )}
@@ -153,7 +153,7 @@ function GamePageContent({ mode }: ContentProps) {
 
       <Modal open={showGiveUpModal} onClose={handleGiveUpCancel}>
         <h2 className="mb-4 text-center text-lg font-bold text-amber-700 dark:text-casino-gold">
-          ギブアップしますか？
+          ゲームを終了しますか？
         </h2>
         <p className="mb-6 text-center text-sm text-gray-600 dark:text-gray-400">
           {`現在のスコア: ${state.score}${SCORE_UNITS[mode]}`}
