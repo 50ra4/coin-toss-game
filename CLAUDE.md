@@ -105,6 +105,12 @@ pnpm check             # 全チェック一括実行(format + lint + type + test
 - Conventional Commits 形式（`feat:`, `fix:`, `docs:` 等）
 - Husky + lint-staged でコミット時に自動チェック
 
+## 開発フロー
+
+- **Issue対応時**: タスクの実行前に新しいブランチを作成してから対応する
+- **タスク分割時**: タスクごとにコミットを行い、コミット前にはユーザーに確認を求める
+- **PR作成時**: `.github/pull_request_template.md` のフォーマットに従って作成する
+
 ## 仕様書
 
 詳細な仕様は `docs/` 配下の8ファイルを参照:
