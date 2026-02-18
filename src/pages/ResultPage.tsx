@@ -10,6 +10,7 @@ import { TopScoresComparison } from '@/features/result/TopScoresComparison/TopSc
 import { ShareSection } from '@/features/result/ShareSection/ShareSection';
 import { MotivationMessage } from '@/features/result/MotivationMessage/MotivationMessage';
 import { AdPlaceholder } from '@/components/AdPlaceholder/AdPlaceholder';
+import { GlobalFooter } from '@/components/GlobalFooter/GlobalFooter';
 import { Button } from '@/components/Button/Button';
 import { Icon } from '@/components/Icon/Icon';
 
@@ -96,6 +97,7 @@ export function ResultPage() {
           </div>
         </div>
       </div>
+      <GlobalFooter />
     </div>
   );
 }

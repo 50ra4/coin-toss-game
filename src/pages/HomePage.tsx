@@ -4,6 +4,7 @@ import { useGameStorage } from '@/features/storage/useGameStorage';
 import { useDarkMode } from '@/hooks/useDarkMode';
 import { useSound } from '@/hooks/useSound';
 import { GlobalHeader } from '@/components/GlobalHeader/GlobalHeader';
+import { GlobalFooter } from '@/components/GlobalFooter/GlobalFooter';
 import { HeroCoin } from '@/features/home/HeroCoin/HeroCoin';
 import { ModeCard } from '@/features/mode/ModeCard/ModeCard';
 import { LeaderBoard } from '@/features/home/LeaderBoard/LeaderBoard';
@@ -52,6 +53,7 @@ export function HomePage() {
       </div>
 
       <LeaderBoard topScores={data.topScores} />
+      <GlobalFooter />
     </div>
   );
 }
