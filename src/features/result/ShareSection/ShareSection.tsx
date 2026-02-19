@@ -46,6 +46,7 @@ export function ShareSection({
 
   const handleShareLine = useCallback(async () => {
     try {
+      await liffService.init();
       await liffService.shareTargetPicker(shareText);
     } catch {
       window.open(

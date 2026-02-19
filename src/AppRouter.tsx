@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react';
 import {
   createBrowserRouter,
   RouterProvider,
@@ -5,17 +6,33 @@ import {
   ScrollRestoration,
   Navigate,
 } from 'react-router-dom';
-import { HomePage } from '@/pages/HomePage';
-import { GamePage } from '@/pages/GamePage';
-import { ResultPage } from '@/pages/ResultPage';
-import { TermsPage } from '@/pages/TermsPage';
-import { PrivacyPolicyPage } from '@/pages/PrivacyPolicyPage';
+import { PageLoader } from '@/components/PageLoader/PageLoader';
+
+const HomePage = lazy(() =>
+  import('@/pages/HomePage').then((m) => ({ default: m.HomePage })),
+);
+const GamePage = lazy(() =>
+  import('@/pages/GamePage').then((m) => ({ default: m.GamePage })),
+);
+const ResultPage = lazy(() =>
+  import('@/pages/ResultPage').then((m) => ({ default: m.ResultPage })),
+);
+const TermsPage = lazy(() =>
+  import('@/pages/TermsPage').then((m) => ({ default: m.TermsPage })),
+);
+const PrivacyPolicyPage = lazy(() =>
+  import('@/pages/PrivacyPolicyPage').then((m) => ({
+    default: m.PrivacyPolicyPage,
+  })),
+);
 
 function RootLayout() {
   return (
     <>
       <ScrollRestoration />
-      <Outlet />
+      <Suspense fallback={<PageLoader />}>
+        <Outlet />
+      </Suspense>
     </>
   );
 }
