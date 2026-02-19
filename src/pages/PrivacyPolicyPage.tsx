@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { Icon } from '@/components/Icon/Icon';
 import { GlobalFooter } from '@/components/GlobalFooter/GlobalFooter';
 
-export function PrivacyPolicyPage() {
+function PrivacyPolicyPage() {
   return (
     <div className="min-h-screen bg-light-gradient dark:bg-casino-gradient">
       <div className="mx-auto max-w-2xl px-4 py-8">
@@ -102,3 +102,5 @@ export function PrivacyPolicyPage() {
     </div>
   );
 }
+
+export default PrivacyPolicyPage;

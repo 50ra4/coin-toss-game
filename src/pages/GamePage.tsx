@@ -18,7 +18,7 @@ import { ResultFeedback } from '@/features/game/ResultFeedback/ResultFeedback';
 import { StreakNotification } from '@/features/game/StreakNotification/StreakNotification';
 import type { GameResult } from '@/features/result/result.schema';
 
-export function GamePage() {
+function GamePage() {
   const { mode: modeParam } = useParams<{ mode: string }>();
   const parsed = GameModeSchema.safeParse(modeParam);
 
@@ -178,3 +178,5 @@ function GamePageContent({ mode }: ContentProps) {
     </div>
   );
 }
+
+export default GamePage;

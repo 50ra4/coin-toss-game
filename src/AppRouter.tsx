@@ -8,23 +8,11 @@ import {
 } from 'react-router-dom';
 import { PageLoader } from '@/components/PageLoader/PageLoader';
 
-const HomePage = lazy(() =>
-  import('@/pages/HomePage').then((m) => ({ default: m.HomePage })),
-);
-const GamePage = lazy(() =>
-  import('@/pages/GamePage').then((m) => ({ default: m.GamePage })),
-);
-const ResultPage = lazy(() =>
-  import('@/pages/ResultPage').then((m) => ({ default: m.ResultPage })),
-);
-const TermsPage = lazy(() =>
-  import('@/pages/TermsPage').then((m) => ({ default: m.TermsPage })),
-);
-const PrivacyPolicyPage = lazy(() =>
-  import('@/pages/PrivacyPolicyPage').then((m) => ({
-    default: m.PrivacyPolicyPage,
-  })),
-);
+const HomePage = lazy(() => import('@/pages/HomePage'));
+const GamePage = lazy(() => import('@/pages/GamePage'));
+const ResultPage = lazy(() => import('@/pages/ResultPage'));
+const TermsPage = lazy(() => import('@/pages/TermsPage'));
+const PrivacyPolicyPage = lazy(() => import('@/pages/PrivacyPolicyPage'));
 
 function RootLayout() {
   return (
