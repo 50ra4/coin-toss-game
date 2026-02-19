@@ -14,7 +14,7 @@ import { GlobalFooter } from '@/components/GlobalFooter/GlobalFooter';
 import { Button } from '@/components/Button/Button';
 import { Icon } from '@/components/Icon/Icon';
 
-export function ResultPage() {
+function ResultPage() {
   const location = useLocation();
   const navigate = useNavigate();
   const { data } = useGameStorage();
@@ -101,3 +101,5 @@ export function ResultPage() {
     </div>
   );
 }
+
+export default ResultPage;

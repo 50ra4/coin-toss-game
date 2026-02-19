@@ -10,7 +10,7 @@ import { ModeCard } from '@/features/mode/ModeCard/ModeCard';
 import { LeaderBoard } from '@/features/home/LeaderBoard/LeaderBoard';
 import { Icon } from '@/components/Icon/Icon';
 
-export function HomePage() {
+function HomePage() {
   const { data } = useGameStorage();
   const { darkMode, toggleDarkMode } = useDarkMode();
   const { soundEnabled, toggleSound } = useSound();
@@ -57,3 +57,5 @@ export function HomePage() {
     </div>
   );
 }
+
+export default HomePage;
