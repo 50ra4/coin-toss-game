@@ -8,11 +8,29 @@ import {
 } from 'react-router-dom';
 import { PageLoader } from '@/components/PageLoader/PageLoader';
 
-const HomePage = lazy(() => import('@/pages/HomePage'));
-const GamePage = lazy(() => import('@/pages/GamePage'));
-const ResultPage = lazy(() => import('@/pages/ResultPage'));
-const TermsPage = lazy(() => import('@/pages/TermsPage'));
-const PrivacyPolicyPage = lazy(() => import('@/pages/PrivacyPolicyPage'));
+const minDelay = <T,>(promise: Promise<T>, ms: number) =>
+  Promise.all([
+    promise,
+    new Promise<void>((resolve) => setTimeout(resolve, ms)),
+  ]).then(([module]) => module);
+
+const MIN_LOADING_TIME_MS = 2000;
+
+const HomePage = lazy(() =>
+  minDelay(import('@/pages/HomePage'), MIN_LOADING_TIME_MS),
+);
+const GamePage = lazy(() =>
+  minDelay(import('@/pages/GamePage'), MIN_LOADING_TIME_MS),
+);
+const ResultPage = lazy(() =>
+  minDelay(import('@/pages/ResultPage'), MIN_LOADING_TIME_MS),
+);
+const TermsPage = lazy(() =>
+  minDelay(import('@/pages/TermsPage'), MIN_LOADING_TIME_MS),
+);
+const PrivacyPolicyPage = lazy(() =>
+  minDelay(import('@/pages/PrivacyPolicyPage'), MIN_LOADING_TIME_MS),
+);
 
 function RootLayout() {
   return (
