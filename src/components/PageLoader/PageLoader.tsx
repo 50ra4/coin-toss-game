@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { motion } from 'framer-motion';
-import { Icon } from '@/components/Icon/Icon';
+import { MonetizationOnIcon } from '@/components/Icon/MonetizationOnIcon';
 
 const COIN_ROTATE = {
   rotateY: [0, 1800, 3600],
@@ -25,7 +25,7 @@ export const PageLoader = memo(function PageLoader() {
             perspective: 1000,
           }}
         >
-          <Icon name="monetization_on" size={40} className="text-white" />
+          <MonetizationOnIcon className="size-10 text-white" />
         </motion.div>
         <p className="text-sm text-amber-700 dark:text-casino-gold">
           読み込み中...
